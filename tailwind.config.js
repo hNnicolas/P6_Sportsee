@@ -22,6 +22,10 @@ module.exports = {
         wave: "wave 1.5s ease-in-out infinite",
         pulse: "pulse 3s ease-in-out infinite",
       },
+
+      backgroundImage: {
+        "custom-gradient": "linear-gradient(to bottom, #FEFEFF, #F7F8FF)",
+      },
     },
   },
   plugins: [],

@@ -13,7 +13,7 @@ interface RunningSession {
 }
 
 interface WeeklyDistance {
-  week: string; // ex: "2025-W32"
+  week: string;
   distance: number;
 }
 

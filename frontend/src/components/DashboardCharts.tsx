@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   BarChart,
+  ComposedChart,
   Bar,
   Line,
   XAxis,
@@ -49,7 +50,6 @@ function WeeklyDistanceChart({
   });
 
   const totalDistance = dataForChart.reduce((sum, entry) => sum + entry.km, 0);
-  const averageDistance = totalDistance / dataForChart.length;
 
   // Navigation des semaines
   const handlePrev = () => {
@@ -72,65 +72,6 @@ function WeeklyDistanceChart({
         justifyContent: "center",
       }}
     >
-      {/* Ligne moyenne + flèches */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 20,
-          marginBottom: 10,
-          fontWeight: "bold",
-          color: "#0B23F4",
-          fontSize: 14,
-        }}
-      >
-        <span>Moyenne km/semaine : {averageDistance.toFixed(2)}</span>
-        <button
-          onClick={handlePrev}
-          disabled={currentIndex === 0}
-          style={{
-            cursor: currentIndex === 0 ? "default" : "pointer",
-            border: "none",
-            background: "transparent",
-            color: "#666",
-            fontSize: 18,
-            transition: "color 0.3s",
-          }}
-          onMouseEnter={(e) => {
-            if (currentIndex > 0) e.currentTarget.style.color = "#0B23F4";
-          }}
-          onMouseLeave={(e) => {
-            if (currentIndex > 0) e.currentTarget.style.color = "#666";
-          }}
-        >
-          ←
-        </button>
-        <button
-          onClick={handleNext}
-          disabled={currentIndex + 4 >= sortedWeeks.length}
-          style={{
-            cursor:
-              currentIndex + 4 >= sortedWeeks.length ? "default" : "pointer",
-            border: "none",
-            background: "transparent",
-            color: "#666",
-            fontSize: 18,
-            transition: "color 0.3s",
-          }}
-          onMouseEnter={(e) => {
-            if (currentIndex + 4 < sortedWeeks.length)
-              e.currentTarget.style.color = "#0B23F4";
-          }}
-          onMouseLeave={(e) => {
-            if (currentIndex + 4 < sortedWeeks.length)
-              e.currentTarget.style.color = "#666";
-          }}
-        >
-          →
-        </button>
-      </div>
-
       <h4 style={{ marginBottom: 10, textAlign: "center" }}>
         Total des kilomètres 4 dernières semaines :{" "}
         <strong>{totalDistance.toFixed(2)} km</strong>
@@ -189,18 +130,35 @@ function HeartRateChart({
 }: {
   data: { day: string; min: number; max: number; avg: number }[];
 }) {
+  // Ordre fixe des jours (Lun -> Dim)
+  const daysOrder = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
+  const orderedData = [...data].sort(
+    (a, b) => daysOrder.indexOf(a.day) - daysOrder.indexOf(b.day)
+  );
+
   return (
     <div style={{ flex: 1, padding: 20, background: "#fff", borderRadius: 12 }}>
       <h4 style={{ marginBottom: 10, textAlign: "center" }}>
         Fréquence cardiaque moyenne
       </h4>
       <ResponsiveContainer width="100%" height={200}>
-        <BarChart data={data}>
+        <ComposedChart data={orderedData}>
+          {/* Axe X : jours */}
           <XAxis dataKey="day" tick={{ fontSize: 12 }} />
-          <YAxis />
+
+          {/* Axe Y : graduations fixes */}
+          <YAxis
+            domain={[130, 187]} // min/max fixes
+            ticks={[130, 145, 160, 187]}
+          />
+
           <Tooltip />
+
+          {/* Barres min/max */}
           <Bar dataKey="min" fill="#ffc2c2" />
           <Bar dataKey="max" fill="#ff2e2e" />
+
+          {/* Ligne moyenne */}
           <Line
             type="monotone"
             dataKey="avg"
@@ -208,8 +166,10 @@ function HeartRateChart({
             strokeWidth={2}
             dot
           />
-        </BarChart>
+        </ComposedChart>
       </ResponsiveContainer>
+
+      {/* Légende */}
       <div
         style={{
           display: "flex",

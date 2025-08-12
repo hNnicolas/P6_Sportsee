@@ -50,34 +50,27 @@ export default function ProfilePage() {
 
   return (
     <div className="bg-[#F2F3FF] min-h-screen flex flex-col text-[#111111] font-sans">
-      {/* HEADER */}
-      <header className="bg-white w-full py-4 px-8 shadow-sm">
-        <div className="max-w-[1500px] mx-auto flex justify-between items-center">
-          <div className="flex items-center">
-            <img src="/logo.svg" alt="Logo" className="w-[80px]" />
-            <div className="ml-2 font-bold text-2xl text-[#0B23F4]">
-              SPORTSEE
-            </div>
+      <header className="flex justify-between items-center mb-8">
+        <div className="flex items-center">
+          <div className="relative inline-block">
+            <img
+              src="/logo.svg"
+              alt="Logo"
+              className="w-[120px] h-auto animate-[wave_1.5s_ease-in-out_infinite,pulse_3s_ease-in-out_infinite] origin-[70%_70%] z-10"
+            />
           </div>
-          <nav className="flex items-center bg-white rounded-full px-6 py-2 text-sm font-medium text-black">
-            <Link href="/dashboard" className="hover:text-[#0B23F4]">
-              Dashboard
-            </Link>
-            <Link href="/chat" className="hover:text-[#0B23F4]">
-              Coach AI
-            </Link>
-            <div className="flex items-center gap-4">
-              <Link href="/profile" className="hover:text-[#0B23F4]">
-                Mon profil
-              </Link>
-              <span className="text-gray-300">|</span>
-              <button
-                onClick={logout}
-                className="text-black hover:text-[#0B23F4] bg-transparent px-4 py-1 rounded-full transition-colors"
-              >
-                Se déconnecter
-              </button>
-            </div>
+          <div className="font-bold text-xl text-[#0b23f4] ml-2 select-none">
+            SPORTSEE
+          </div>
+        </div>
+
+        <div>
+          <nav>
+            <Link href="/dashboard">Dashboard</Link>
+            <a href="#">Coach AI</a>
+            <Link href="/profile">Mon profil</Link>
+            <span className="text-[#0B23F4] text-xs font-thin">|</span>
+            <button onClick={logout}>Se déconnecter</button>
           </nav>
         </div>
       </header>

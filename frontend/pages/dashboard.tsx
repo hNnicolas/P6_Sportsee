@@ -16,8 +16,7 @@ export default function DashboardPage() {
   const { profile, statistics } = userInfo;
 
   return (
-    <div className="max-w-[1000px] mx-auto p-8 font-sans bg-[#f9f9f9]">
-      {/* Header */}
+    <div className="max-w-[1700px] mx-auto p-8 font-sans bg-[#F2F3FF]">
       <header className="flex justify-between items-center mb-8">
         <div className="flex items-center">
           <div className="relative inline-block">
@@ -32,32 +31,21 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Nav */}
-        <nav className="flex items-center bg-white rounded-full px-6 py-2 text-sm font-medium text-black shadow-sm">
-          <Link href="/dashboard" className="mr-4 hover:underline">
-            Dashboard
-          </Link>
-          <a href="#" className="mr-4 hover:underline">
-            Coach AI
-          </a>
-          <Link href="/profile" className="mr-4 hover:underline">
-            Mon profil
-          </Link>
-          <button
-            onClick={logout}
-            className="px-4 py-2 border border-[#0b23f4] text-[#0b23f4] rounded-md hover:bg-blue-50 transition-colors"
-          >
-            Se déconnecter
-          </button>
-        </nav>
+        <div>
+          <nav>
+            <Link href="/dashboard">Dashboard</Link>
+            <a href="#">Coach AI</a>
+            <Link href="/profile">Mon profil</Link>
+            <span className="text-[#0B23F4] text-xs font-thin">|</span>
+            <button onClick={logout}>Se déconnecter</button>
+          </nav>
+        </div>
       </header>
 
       <section className="flex flex-col gap-6">
         <div
-          className="flex items-center justify-between w-full rounded-xl"
-          style={{
-            background: "linear-gradient(90deg, #FEFEFF, #F6F7FF)",
-          }}
+          className="flex items-center justify-between w-[1200px] mx-auto rounded-xl p-4 overflow-hidden"
+          style={{ background: "linear-gradient(to bottom, #FEFEFF, #F7F8FF)" }}
         >
           <div className="flex items-center">
             <div className="w-[100px] h-[100px] rounded-xl overflow-hidden shadow-md flex-shrink-0 cursor-pointer relative group">
@@ -69,21 +57,20 @@ export default function DashboardPage() {
             </div>
             <div className="ml-4 flex flex-col">
               <h2 className="text-lg font-semibold">{`${profile.firstName} ${profile.lastName}`}</h2>
-              <p style={{ color: "#707070" }}>
+              <p className="text-gray-600">
                 Membre depuis le{" "}
                 {new Date(profile.createdAt).toLocaleDateString()}
               </p>
             </div>
           </div>
 
-          <div className="relative flex items-center max-w-xs">
-            <p className="text-[#707070] font-medium whitespace-nowrap absolute left-0 -translate-x-full mr-2">
+          <div className="flex items-center gap-3">
+            <p className="text-[#707070] font-medium whitespace-nowrap">
               Distance totale parcourue :
             </p>
 
-            {/* Conteneur bleu pour la valeur */}
-            <div className="p-3 rounded-md bg-[#0B23F4] text-white min-w-[80px] text-center">
-              <span className="bg-white text-[#FFFFFF] px-3 py-1 rounded font-semibold inline-block">
+            <div className="p-3 rounded-md bg-[#0B23F4] text-white">
+              <span className="bg-white text-[#FFFFFF] px-3 py-1 rounded font-semibold min-w-[60px] text-center inline-block">
                 {typeof statistics.totalDistance === "number"
                   ? statistics.totalDistance.toFixed(1)
                   : Number(statistics.totalDistance).toFixed(1)}

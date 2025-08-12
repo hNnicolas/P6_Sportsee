@@ -13,6 +13,34 @@
   --box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
 }
 
+nav {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4.5rem !important;
+  padding: 0.5rem 1.5rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  background-color: var(--color-white) !important;
+  border-radius: 9999px !important;
+  color: black !important;
+  min-width: 250px !important;
+}
+nav a {
+  color: black !important;
+  text-decoration: none !important;
+}
+nav a:hover {
+  text-decoration: underline !important;
+}
+
+nav button {
+  color: #6675f8 !important;
+  border: none !important;
+  background: none !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+}
+
 form {
   background-color: var(--color-white) !important;
 }
