@@ -75,11 +75,8 @@ export default function ProfilePage() {
         </div>
       </header>
 
-      {/* MAIN CONTENT */}
       <main className="max-w-[1500px] mx-auto w-full p-8 flex gap-10 flex-1">
-        {/* LEFT: avatar + infos */}
         <div className="bg-white rounded-xl shadow-md p-6 flex flex-col w-[320px] flex-shrink-0 gap-8">
-          {/* Avatar + nom + membre depuis dans la même ligne */}
           <div className="flex items-center gap-4 bg-[var(--color-white)]">
             <div className="w-[140px] h-[160px] overflow-hidden rounded-md group p-4 rounded-md shadow-sm cursor-pointer flex-shrink-0">
               <img
@@ -103,7 +100,6 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* Votre profil avec margin bottom */}
           <div className="text-center bg-[var(--color-white)] p-6 pb-16 w-[80%] mx-auto rounded-[var(--border-radius)] shadow-md mb-6 min-h-[250px]">
             <h2 className="text-lg font-semibold mb-2 text-[#111111]">
               Votre profil
@@ -118,7 +114,6 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* RIGHT: statistiques */}
         <div className="flex-1 flex flex-col gap-6">
           <div>
             <h2 className="text-xl font-semibold mb-1">Vos statistiques</h2>
@@ -166,7 +161,6 @@ export default function ProfilePage() {
         </div>
       </main>
 
-      {/* FOOTER */}
       <footer className="bg-white w-full py-4 px-8 border-t border-gray-200 text-sm text-[#111111]">
         <div className="max-w-[1500px] mx-auto flex justify-between items-center flex-wrap gap-4">
           <div className="font-semibold">@Sportsee, Tous droits réservés</div>

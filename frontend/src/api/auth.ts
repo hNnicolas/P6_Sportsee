@@ -29,3 +29,28 @@ export const getUserById = async (token: string) => {
   const user = await response.json();
   return user;
 };
+
+
+export const getUserActivity = async (
+  token: string,
+  startWeek: string,
+  endWeek: string
+) => {
+  const response = await fetch(
+    `http://localhost:8000/api/user-activity?startWeek=${encodeURIComponent(startWeek)}&endWeek=${encodeURIComponent(endWeek)}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => null);
+    throw new Error(errorData?.message || "Impossible de récupérer l'activité utilisateur");
+  }
+
+  const sessions = await response.json();
+  return sessions;
+};
+
