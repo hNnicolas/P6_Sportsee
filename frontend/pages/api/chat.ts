@@ -15,11 +15,30 @@ export default async function handler(
   }
 
   try {
-    console.log("Clé API récupérée :", process.env.MISTRAL_API_KEY);
     const apiKey = process.env.MISTRAL_API_KEY;
     if (!apiKey) {
       throw new Error("Clé API Mistral manquante dans .env.local");
     }
+
+    // Prompt optimisé pour le coach IA
+    const systemPrompt = `
+Tu es un coach sportif virtuel. 
+Ton rôle est de conseiller des utilisateurs sur :
+- l'entraînement physique (endurance, force, récupération),
+- la nutrition adaptée à leurs objectifs,
+- la prévention et la gestion des blessures légères.
+
+Ton ton doit être :
+- motivant et encourageant,
+- clair et précis, mais accessible,
+- professionnel mais humain.
+
+Règles :
+- Si une information manque, demande des précisions plutôt que d'inventer,
+- Si la question est hors sujet, réponds poliment que tu ne peux pas répondre,
+- Limite les réponses à 3-4 phrases maximum,
+- Maintiens toujours le persona de coach.
+`;
 
     const mistralRes = await fetch(
       "https://api.mistral.ai/v1/chat/completions",
@@ -30,9 +49,9 @@ export default async function handler(
           Authorization: `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: "mistral-tiny", // ou mistral-small, mistral-medium...
+          model: "mistral-tiny",
           messages: [
-            { role: "system", content: "Tu es un assistant utile et amical." },
+            { role: "system", content: systemPrompt }, 
             { role: "user", content: message },
           ],
         }),
