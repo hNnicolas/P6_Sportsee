@@ -2,6 +2,7 @@ import { useState } from "react";
 import useUserInfo from "../hooks/useUserInfo";
 import { useAuth } from "../contexts/AuthContext";
 import TypingDots from "../components/TypingDots";
+import useUserPrompt from "../hooks/useUserPrompt";
 
 interface Message {
   id: number;
@@ -17,11 +18,13 @@ export default function Chat() {
   const [input, setInput] = useState("");
   const [botTyping, setBotTyping] = useState(false);
 
+  // On récupère le niveau de l'utilisateur
+  const userLevel = data?.profile?.level || "débutant";
+  const userPrompt = useUserPrompt(userLevel);
+
   const sendMessage = async (text?: string) => {
     const messageToSend = text || input;
     if (!messageToSend.trim()) return;
-
-    console.log("Message utilisateur :", messageToSend);
 
     const newMessage: Message = {
       id: Date.now(),
@@ -36,7 +39,10 @@ export default function Chat() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: messageToSend }),
+        body: JSON.stringify({
+          message: messageToSend,
+          prompt: userPrompt,
+        }),
       });
 
       if (!res.ok) {
@@ -45,7 +51,6 @@ export default function Chat() {
       }
 
       const data = await res.json();
-      console.log("Réponse bot :", data.response);
 
       setMessages((prev) => [
         ...prev,

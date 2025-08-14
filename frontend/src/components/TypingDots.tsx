@@ -1,30 +1,33 @@
 export default function TypingDots() {
-  const colors = "#FBC0B6";
   const delays = ["0s", "0.2s", "0.4s", "0.6s"];
 
   return (
-    <div className="flex space-x-2 h-6 items-end">
+    <div className="flex items-center space-x-2">
       {delays.map((delay, index) => (
         <span
           key={index}
-          className="w-4 h-4 rounded-full"
+          className="w-3 h-3 bg-blue-500 rounded-full"
           style={{
-            backgroundColor: colors,
-            animation: `bounce 1s infinite`,
+            animationName: "blink",
+            animationDuration: "1s",
+            animationTimingFunction: "ease-in-out",
+            animationIterationCount: "infinite",
             animationDelay: delay,
           }}
-        ></span>
+        />
       ))}
 
       <style jsx>{`
-        @keyframes bounce {
+        @keyframes blink {
           0%,
           80%,
           100% {
-            transform: translateY(0);
+            opacity: 0.3;
+            transform: scale(0.8);
           }
           40% {
-            transform: translateY(-10px);
+            opacity: 1;
+            transform: scale(1);
           }
         }
       `}</style>

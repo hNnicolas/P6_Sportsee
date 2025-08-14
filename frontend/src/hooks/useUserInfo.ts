@@ -9,6 +9,7 @@ interface Profile {
   weight: number;
   profilePicture: string;
   createdAt: string;
+  level?: "débutant" | "intermédiaire" | "expert";
 }
 
 interface Statistics {

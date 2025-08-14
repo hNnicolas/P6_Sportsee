@@ -51,7 +51,7 @@ Règles :
         body: JSON.stringify({
           model: "mistral-tiny",
           messages: [
-            { role: "system", content: systemPrompt }, 
+            { role: "system", content: systemPrompt },
             { role: "user", content: message },
           ],
         }),
