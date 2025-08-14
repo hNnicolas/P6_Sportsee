@@ -160,11 +160,7 @@ export default function Chat() {
             onClick={() => sendMessage()}
             className="bg-[#0A24F5] hover:bg-blue-700 p-2 rounded-lg"
           >
-            <img
-              src="/assets/sendArrow.svg"
-              alt="Envoyer"
-              className="w-5 h-5"
-            />
+            <img src="/sendArrow.svg" alt="Envoyer" className="w-5 h-5" />
           </button>
         </div>
 
