@@ -3,8 +3,7 @@ import Chat from "../src/components/Chat";
 
 const ChatPage: React.FC = () => {
   return (
-    <div style={{ maxWidth: "600px", margin: "0 auto", padding: "1rem" }}>
-      <h1>Chat avec Mistral</h1>
+    <div className="max-w-[1500px] w-full mx-auto p-4">
       <Chat />
     </div>
   );

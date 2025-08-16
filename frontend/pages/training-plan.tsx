@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import TrainingPlanWindow from "../src/components/TrainingPlanWindow";
-import useUserInfo from "../src/hooks/useUserInfo"; // Assure-toi que le chemin est correct
-
+import { useAuth } from "@/src/contexts/AuthContext";
+import useUserInfo from "../src/hooks/useUserInfo";
 export default function TrainingPlanPage() {
   const [showWindow, setShowWindow] = useState(false);
   const [level, setLevel] = useState("");
@@ -12,7 +12,7 @@ export default function TrainingPlanPage() {
     weight: number;
   } | null>(null);
 
-  const token = localStorage.getItem("token");
+  const { token } = useAuth();
   const { data: userInfo, isLoading, error } = useUserInfo(token);
 
   // Met à jour le profil utilisateur dès que userInfo change

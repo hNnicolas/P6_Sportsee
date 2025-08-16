@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Week from "./Week";
-import { TrainingPlan } from "../types";
+import { DayType, TrainingPlan } from "../types";
 
 interface Props {
   onClose: () => void;
@@ -26,9 +26,9 @@ export default function TrainingPlanWindow({
   const fetchPlan = async () => {
     setLoading(true);
     setError(null);
-    console.log("Début fetchPlan", { level, goal, availableDays, age, weight });
+
     try {
-      const response = await fetch("/api/generate", {
+      const response = await fetch("/api/training-plan/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +40,11 @@ export default function TrainingPlanWindow({
 
       if (!response.ok) {
         const text = await response.text();
-        console.error("Réponse non OK :", text);
+        console.error("Réponse non OK complète :", {
+          status: response.status,
+          statusText: response.statusText,
+          body: text,
+        });
         throw new Error(
           `Erreur lors de la génération du plan: ${response.status}`
         );
@@ -48,6 +52,7 @@ export default function TrainingPlanWindow({
 
       const data = await response.json();
       console.log("Données reçues", data);
+
       setPlan(data.plan.planning_entrainement || data.plan);
     } catch (err: any) {
       setError(err.message);
@@ -84,9 +89,22 @@ export default function TrainingPlanWindow({
         </button>
 
         {plan &&
-          Object.entries(plan).map(([weekName, weekData]) => (
-            <Week key={weekName} weekName={weekName} weekData={weekData} />
-          ))}
+          Object.entries(plan).map(([weekName, weekData]) => {
+            // Transformer l'objet {lundi: {...}, mardi: {...}} en tableau DayType[]
+            const daysArray: DayType[] = Object.entries(weekData).map(
+              ([dayName, day]) => ({
+                nomJour: dayName,
+                seance: day.seance,
+                intensite: day.intensite || "—",
+                description: day.description || "—",
+                exercices: day.exercices || [],
+              })
+            );
+
+            return (
+              <Week key={weekName} weekName={weekName} weekData={daysArray} />
+            );
+          })}
       </div>
     </div>
   );

@@ -77,14 +77,12 @@ form {
   background-color: var(--color-white) !important;
 }
 
-input {
+/* input {
   background-color: var(--color-white) !important;
   margin: 10px;
-  height: 40px;
-  width: 60% !important; /* forcer la largeur */
-  max-width: 300px !important;
+  height: 100px;
   box-sizing: border-box;
-}
+} */
 
 .bg-\[\#0B23F4\] {
   background-color: #0b23f4 !important;

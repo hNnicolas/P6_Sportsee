@@ -36,6 +36,7 @@ export default function DashboardPage() {
             <Link href="/dashboard">Dashboard</Link>
             <Link href="/chat">Coach AI</Link>
             <Link href="/profile">Mon profil</Link>
+            <Link href="/training-plan">Training Plan</Link>
             <span className="text-[#0B23F4] text-xs font-thin">|</span>
             <button onClick={logout}>Se déconnecter</button>
           </nav>
