@@ -19,7 +19,6 @@ export default function DashboardPage() {
 
   return (
     <div className="max-w-[1700px] mx-auto p-8 font-sans bg-[#F2F3FF]">
-      {/* Nouveau wrapper avec background blanc */}
       <div className="bg-white rounded-xl p-6">
         <header className="flex justify-between items-center mb-8">
           <div className="flex items-center">
@@ -40,7 +39,6 @@ export default function DashboardPage() {
               <Link href="/dashboard">Dashboard</Link>
               <Link href="/chat">Coach AI</Link>
               <Link href="/profile">Mon profil</Link>
-              <Link href="/training-plan">Training Plan</Link>
               <span className="text-[#0B23F4] text-xs font-thin">|</span>
               <button onClick={logout}>Se déconnecter</button>
             </nav>
@@ -100,7 +98,14 @@ export default function DashboardPage() {
           className="flex justify-center items-center w-full p-6 rounded-xl"
           style={{ backgroundColor: "white" }}
         >
-          <TrainingFlow />
+          <TrainingFlow
+            onClose={() => console.log("Fermeture")}
+            level="débutant"
+            goal="perte de poids"
+            availableDays={["lundi", "mercredi", "vendredi"]}
+            age={25}
+            weight={70}
+          />
         </div>
       </div>
     </div>

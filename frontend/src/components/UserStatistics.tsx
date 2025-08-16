@@ -10,18 +10,29 @@ export default function UserStatistics({
   distance,
 }: StatisticsProps) {
   return (
-    <div className="flex gap-6">
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1.5rem",
+        backgroundColor: "white",
+        padding: "1rem",
+        borderRadius: "0.5rem",
+        marginLeft: "auto",
+        width: "fit-content",
+      }}
+    >
       {/* Durée parcourue */}
-      <div className="bg-white p-6 rounded-xl shadow-md flex flex-col items-center w-[200px]">
+      <div className="bg-white p-6 rounded-xl shadow-md flex items-center justify-center w-[200px] gap-4">
         <span className="text-[#0B23F4] text-2xl font-bold">
           {Number(duration || 0).toFixed(1)}
         </span>
 
-        <span className="text-[#B6BDFC] text-sm">Minutes</span>
+        <span className="text-[#B6BDFC] text-sm ml-2">Minutes</span>
       </div>
 
       {/* Distance parcourue */}
-      <div className="bg-white p-6 rounded-xl shadow-md flex flex-col items-center w-[200px]">
+      <div className="bg-white p-6 rounded-xl shadow-md flex items-center justify-center w-[200px] gap-4">
         <span className="text-[#F4320C] text-2xl font-bold">
           {Number(distance || 0).toFixed(1)}
         </span>

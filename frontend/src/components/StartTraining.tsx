@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 
 interface StartTrainingProps {
   onStart: () => void;
@@ -9,7 +9,10 @@ interface StartTrainingProps {
 export default function StartTraining({ onStart }: StartTrainingProps) {
   return (
     <div className="flex flex-col items-center justify-center p-8 !bg-white rounded-xl shadow-md gap-4">
-      <FontAwesomeIcon icon={faCalendar} size="3x" className="text-blue-600" />
+      <FontAwesomeIcon
+        icon={faCalendarDays}
+        style={{ color: "#0B23F4", fontSize: "3rem" }}
+      />
       <h2 className="text-xl font-bold text-center">
         Créez votre planning d'entraînement intelligent
       </h2>
