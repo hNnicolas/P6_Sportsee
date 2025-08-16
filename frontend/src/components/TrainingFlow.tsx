@@ -33,12 +33,20 @@ export default function TrainingFlow({
   const flattenPlan = (plan: any) => {
     const result: { day: string; activity: string }[] = [];
 
-    const planEntraînement = plan.plan_entrainement;
+    const planEntraînement = plan?.plan_entrainement;
+
+    if (!planEntraînement) {
+      return result;
+    }
 
     Object.keys(planEntraînement).forEach((semaineKey) => {
       const semaine = planEntraînement[semaineKey];
+      if (!semaine) return;
+
       Object.keys(semaine).forEach((jourKey) => {
         const jour = semaine[jourKey];
+        if (!jour) return;
+
         result.push({
           day: `${semaineKey.replace("_", " ")} - ${jourKey}`,
           activity: jour.seance,
