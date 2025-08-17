@@ -46,40 +46,19 @@ export default function TrainingFlow({
   };
 
   const flattenPlan = (plan: any): WeekPlan[] => {
-    // Récupère le plan d'entrainement depuis l'objet reçu
+    // Récupère le plan d'entrainement depuis l'objet
     const planEntrainement = plan?.plan_entrainement;
-    if (!planEntrainement) return []; // Retourne un tableau vide si aucun plan
+    if (!planEntrainement) return [];
 
-    const result: WeekPlan[] = []; // Tableau final pour stocker les semaines
-
-    // Parcourt chaque semaine du plan
-    Object.keys(planEntrainement).forEach((weekKey) => {
-      const semaine = planEntrainement[weekKey];
-      if (!semaine) return; // Ignore si la semaine est vide
-
-      const days: DayPlan[] = []; // Tableau pour stocker les jours de la semaine
-
-      // Parcourt chaque jour de la semaine
-      Object.keys(semaine).forEach((dayKey) => {
-        const jour = semaine[dayKey];
-        if (!jour) return;
-
-        // Ajoute le jour au tableau days avec session et exercices
-        days.push({
-          day: dayKey,
-          session: jour.seance || "repos",
-          exercices: jour.exercices || [],
-        });
-      });
-
-      // Ajoute la semaine complète avec ses jours au résultat final
-      result.push({
-        week: weekKey,
-        days,
-      });
-    });
-
-    return result;
+    // Transforme chaque semaine en tableau de jours
+    return Object.entries(planEntrainement).map(([weekKey, semaine]) => ({
+      week: weekKey,
+      days: Object.entries(semaine || {}).map(([dayKey, jour]) => ({
+        day: dayKey,
+        session: jour?.seance || "repos",
+        exercices: jour?.exercices || [],
+      })),
+    }));
   };
 
   // Fonction pour générer le planning via le backend
