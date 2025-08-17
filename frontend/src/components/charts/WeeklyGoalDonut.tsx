@@ -31,6 +31,7 @@ export default function WeeklyGoalDonut({
         borderRadius: 20,
         padding: 20,
         boxShadow: "0 0 8px rgba(0,0,0,0.1)",
+        position: "relative",
       }}
     >
       {/* Objectifs réalisés */}
@@ -56,15 +57,7 @@ export default function WeeklyGoalDonut({
             outerRadius={80}
             startAngle={90}
             endAngle={-270}
-            label={({
-              name,
-              value,
-              index,
-            }: {
-              name?: string;
-              value?: number;
-              index?: number;
-            }) => {
+            label={({ name, value, index }) => {
               const color = index !== undefined ? COLORS[index] : "#000";
               return (
                 <text
@@ -86,17 +79,59 @@ export default function WeeklyGoalDonut({
         </PieChart>
       </ResponsiveContainer>
 
-      {/* Légende ou texte au centre du donut */}
-      <p
+      {/* Réalisées en bas à gauche */}
+      <span
         style={{
-          marginTop: -130,
-          fontSize: 16,
+          position: "absolute",
+          bottom: 180,
+          left: 100,
+          display: "flex",
+          alignItems: "center",
+          gap: 6,
           fontWeight: "bold",
-          color: "#0B23F4",
+          fontSize: 16,
+          color: "#707070",
         }}
       >
+        {/* Petit cercle bleu */}
+        <span
+          style={{
+            display: "inline-block",
+            width: 12,
+            height: 12,
+            borderRadius: "50%",
+            backgroundColor: "#0B23F4",
+          }}
+        ></span>
         {validCompleted} réalisées
-      </p>
+      </span>
+
+      {/* Restantes en haut à droite */}
+      <span
+        style={{
+          position: "absolute",
+          top: 80,
+          right: 100,
+          display: "flex",
+          alignItems: "center",
+          gap: 6,
+          fontWeight: "bold",
+          fontSize: 16,
+          color: "#707070",
+        }}
+      >
+        {/* Petit cercle bleu clair */}
+        <span
+          style={{
+            display: "inline-block",
+            width: 12,
+            height: 12,
+            borderRadius: "50%",
+            backgroundColor: "#B6BDFC",
+          }}
+        ></span>
+        {total - validCompleted} restantes
+      </span>
     </div>
   );
 }
