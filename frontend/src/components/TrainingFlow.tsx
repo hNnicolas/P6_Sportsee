@@ -46,21 +46,25 @@ export default function TrainingFlow({
   };
 
   const flattenPlan = (plan: any): WeekPlan[] => {
-    const planEntraînement = plan?.plan_entrainement;
-    if (!planEntraînement) return [];
+    // Récupère le plan d'entrainement depuis l'objet reçu
+    const planEntrainement = plan?.plan_entrainement;
+    if (!planEntrainement) return []; // Retourne un tableau vide si aucun plan
 
-    const result: WeekPlan[] = [];
+    const result: WeekPlan[] = []; // Tableau final pour stocker les semaines
 
-    Object.keys(planEntraînement).forEach((weekKey) => {
-      const semaine = planEntraînement[weekKey];
-      if (!semaine) return;
+    // Parcourt chaque semaine du plan
+    Object.keys(planEntrainement).forEach((weekKey) => {
+      const semaine = planEntrainement[weekKey];
+      if (!semaine) return; // Ignore si la semaine est vide
 
-      const days: DayPlan[] = [];
+      const days: DayPlan[] = []; // Tableau pour stocker les jours de la semaine
 
+      // Parcourt chaque jour de la semaine
       Object.keys(semaine).forEach((dayKey) => {
         const jour = semaine[dayKey];
         if (!jour) return;
 
+        // Ajoute le jour au tableau days avec session et exercices
         days.push({
           day: dayKey,
           session: jour.seance || "repos",
@@ -68,6 +72,7 @@ export default function TrainingFlow({
         });
       });
 
+      // Ajoute la semaine complète avec ses jours au résultat final
       result.push({
         week: weekKey,
         days,
@@ -97,7 +102,7 @@ export default function TrainingFlow({
 
     // 2. Préparation du payload à envoyer au backend
     const payload = {
-      level,
+      level: level.normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
       goal: localGoal,
       availableDays,
       age,
@@ -243,8 +248,9 @@ export default function TrainingFlow({
       {step === 4 && (
         <div className="flex flex-col items-center gap-4 w-full max-w-md bg-white rounded-xl p-8 shadow-md">
           <h2 className="text-xl font-semibold text-center text-black">
-            Votre planning d'entraînement
+            Votre planning de la semaine
           </h2>
+          <h3>Important pour définir un programme adapté</h3>
           {trainingPlan.map((week, wIndex) => (
             <div key={wIndex} className="mb-6">
               <h3 className="font-semibold">{week.week.replace("_", " ")}</h3>
