@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useAuth } from "@/src/contexts/AuthContext";
 import useUserInfo from "@/src/hooks/useUserInfo";
 import DashboardCharts from "@/src/components/DashboardCharts";
-import UserStatistics from "@/src/components/UserStatistics";
 import TrainingFlow from "@/src/components/TrainingFlow";
 
 export default function DashboardPage() {
@@ -89,10 +88,6 @@ export default function DashboardPage() {
         {/* Graphiques */}
         <div className="mt-8">
           <DashboardCharts />
-          <UserStatistics
-            duration={statistics.totalDuration} // ou la clé exacte dans ton objet statistics
-            distance={statistics.totalDistance}
-          />
         </div>
         <div
           className="flex justify-center items-center w-full p-6 rounded-xl"

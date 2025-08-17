@@ -16,7 +16,7 @@ export default function UserStatistics({
         flexDirection: "column",
         gap: "1.5rem",
         backgroundColor: "white",
-        padding: "1rem",
+        padding: "0.5rem",
         borderRadius: "0.5rem",
         marginLeft: "auto",
         width: "fit-content",

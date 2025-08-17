@@ -1,8 +1,6 @@
 import React from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
-const COLORS = ["#2f38dc", "#e8e8e8"];
-
 interface WeeklyGoalDonutProps {
   completed: number;
   total: number;
@@ -12,15 +10,21 @@ export default function WeeklyGoalDonut({
   completed,
   total,
 }: WeeklyGoalDonutProps) {
+  // S'assurer que completed ne dépasse pas total
+  const validCompleted = Math.min(completed, total);
+
   const goalData = [
-    { name: "Réalisées", value: completed },
-    { name: "Restantes", value: total - completed },
+    { name: "Réalisées", value: validCompleted },
+    { name: "Restantes", value: total - validCompleted },
   ];
+
+  const COLORS = ["#0B23F4", "#B6BDFC"];
 
   return (
     <div
       style={{
-        maxWidth: 300,
+        maxWidth: 800,
+        height: 400,
         margin: "2rem auto",
         textAlign: "center",
         background: "#fff",
@@ -29,16 +33,20 @@ export default function WeeklyGoalDonut({
         boxShadow: "0 0 8px rgba(0,0,0,0.1)",
       }}
     >
-      <h4 style={{ marginBottom: 0 }}>Cette semaine</h4>
-      <p style={{ fontSize: 12, color: "#888" }}>Du 23/06/2025 au 30/06/2025</p>
-      <p style={{ margin: "0.5rem 0", fontWeight: 600 }}>
-        <span style={{ color: "#2f38dc" }}>x{completed}</span> sur objectif de{" "}
-        {total}
-      </p>
-      <p style={{ fontSize: 12, color: "#666", marginBottom: 10 }}>
-        Courses hebdomadaire réalisées
-      </p>
+      {/* Objectifs réalisés */}
+      <div style={{ textAlign: "left" }}>
+        <p style={{ margin: "0.5rem 0", fontWeight: 600 }}>
+          <span style={{ color: "#0B23F4", fontSize: "1.1rem" }}>
+            x{validCompleted}
+          </span>{" "}
+          <span style={{ color: "#B6BDFC" }}>sur objectif de {total}</span>
+        </p>
+        <p style={{ fontSize: 12, color: "#666", marginTop: 0 }}>
+          Courses hebdomadaires réalisées
+        </p>
+      </div>
 
+      {/* Graphique camembert */}
       <ResponsiveContainer width="100%" height={200}>
         <PieChart>
           <Pie
@@ -48,6 +56,28 @@ export default function WeeklyGoalDonut({
             outerRadius={80}
             startAngle={90}
             endAngle={-270}
+            label={({
+              name,
+              value,
+              index,
+            }: {
+              name?: string;
+              value?: number;
+              index?: number;
+            }) => {
+              const color = index !== undefined ? COLORS[index] : "#000";
+              return (
+                <text
+                  fill={color}
+                  fontSize={14}
+                  fontWeight="bold"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                >
+                  {value} {name}
+                </text>
+              );
+            }}
           >
             {goalData.map((_, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index]} />
@@ -55,15 +85,17 @@ export default function WeeklyGoalDonut({
           </Pie>
         </PieChart>
       </ResponsiveContainer>
+
+      {/* Légende ou texte au centre du donut */}
       <p
         style={{
           marginTop: -130,
           fontSize: 16,
           fontWeight: "bold",
-          color: "#2f38dc",
+          color: "#0B23F4",
         }}
       >
-        {completed} réalisées
+        {validCompleted} réalisées
       </p>
     </div>
   );

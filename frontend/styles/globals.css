@@ -36,13 +36,17 @@
 
 :root {
   --color-primary: #0b23f4;
-  --color-primary-hover: #091cc4;
+  --color-primary-hover: #b6bdfc;
+  --color-primary-red: #f4320c;
+  --color-primary-red--hover: #fcc1b6;
   --color-background-light: #f2f3ff;
   --color-white: #ffffff;
   --background-primary: #ebecf8;
   --font-family-base: "Arial", sans-serif;
   --border-radius: 12px;
   --box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  --title-color: #111111;
+  --subtitle-color: #707070;
 }
 
 nav {
