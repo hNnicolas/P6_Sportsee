@@ -23,34 +23,54 @@ export default function TrainingFlow({
 }: Props) {
   const [step, setStep] = useState(1);
   const [startDate, setStartDate] = useState("");
-  const [trainingPlan, setTrainingPlan] = useState<
-    { day: string; activity: string }[]
-  >([]);
+  const [trainingPlan, setTrainingPlan] = useState<WeekPlan[]>([]);
   const [localGoal, setLocalGoal] = useState(goal);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const flattenPlan = (plan: any) => {
-    const result: { day: string; activity: string }[] = [];
+  type Exercice = {
+    nom: string;
+    duree: string;
+    repos: string;
+  };
 
+  type DayPlan = {
+    day: string;
+    session: string;
+    exercices: Exercice[];
+  };
+
+  type WeekPlan = {
+    week: string;
+    days: DayPlan[];
+  };
+
+  const flattenPlan = (plan: any): WeekPlan[] => {
     const planEntraînement = plan?.plan_entrainement;
+    if (!planEntraînement) return [];
 
-    if (!planEntraînement) {
-      return result;
-    }
+    const result: WeekPlan[] = [];
 
-    Object.keys(planEntraînement).forEach((semaineKey) => {
-      const semaine = planEntraînement[semaineKey];
+    Object.keys(planEntraînement).forEach((weekKey) => {
+      const semaine = planEntraînement[weekKey];
       if (!semaine) return;
 
-      Object.keys(semaine).forEach((jourKey) => {
-        const jour = semaine[jourKey];
+      const days: DayPlan[] = [];
+
+      Object.keys(semaine).forEach((dayKey) => {
+        const jour = semaine[dayKey];
         if (!jour) return;
 
-        result.push({
-          day: `${semaineKey.replace("_", " ")} - ${jourKey}`,
-          activity: jour.seance,
+        days.push({
+          day: dayKey,
+          session: jour.seance || "repos",
+          exercices: jour.exercices || [],
         });
+      });
+
+      result.push({
+        week: weekKey,
+        days,
       });
     });
 
@@ -59,6 +79,7 @@ export default function TrainingFlow({
 
   // Fonction pour générer le planning via le backend
   const generateTrainingPlan = async () => {
+    // 1. Vérification des champs obligatoires
     if (
       !localGoal ||
       !startDate ||
@@ -74,6 +95,7 @@ export default function TrainingFlow({
     setError("");
     setLoading(true);
 
+    // 2. Préparation du payload à envoyer au backend
     const payload = {
       level,
       goal: localGoal,
@@ -85,6 +107,7 @@ export default function TrainingFlow({
     console.log("Envoi au backend :", payload);
 
     try {
+      // 3. Appel HTTP POST vers l'API
       const response = await axios.post(
         "/api/training-plan/generate",
         payload,
@@ -97,10 +120,12 @@ export default function TrainingFlow({
         const data = response.data;
         console.log("JSON reçu :", data);
 
+        // 4. Si le planning est présent dans la réponse
         if (data.plan) {
-          setTrainingPlan(flattenPlan(data.plan));
-          setStep(4);
+          setTrainingPlan(flattenPlan(data.plan)); // Transforme pour affichage
+          setStep(4); // Passe à l'étape d'affichage
         } else {
+          // 5. En cas de réponse sans plan
           console.error("Le plan n'existe pas dans la réponse :", data);
           setError(
             "Le backend n'a pas renvoyé de planning valide. Voir la console pour plus de détails."
@@ -220,21 +245,27 @@ export default function TrainingFlow({
           <h2 className="text-xl font-semibold text-center text-black">
             Votre planning d'entraînement
           </h2>
-          {trainingPlan.length === 0 ? (
-            <p>Aucun planning disponible</p>
-          ) : (
-            <ul className="w-full">
-              {trainingPlan.map((item, index) => (
-                <li
-                  key={index}
-                  className="border-b py-2 flex justify-between text-[#707070]"
-                >
-                  <span>{item.day}</span>
-                  <span>{item.activity}</span>
-                </li>
-              ))}
-            </ul>
-          )}
+          {trainingPlan.map((week, wIndex) => (
+            <div key={wIndex} className="mb-6">
+              <h3 className="font-semibold">{week.week.replace("_", " ")}</h3>
+              <ul className="ml-4">
+                {week.days.map((day, dIndex) => (
+                  <li key={dIndex} className="mb-2">
+                    <strong>{day.day}</strong> - {day.session}
+                    {day.exercices.length > 0 && (
+                      <ul className="ml-4 text-gray-600">
+                        {day.exercices.map((ex, eIndex) => (
+                          <li key={eIndex}>
+                            {ex.nom} - {ex.duree} - {ex.repos}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
 
           <div className="flex justify-center w-full mt-4">
             <button
