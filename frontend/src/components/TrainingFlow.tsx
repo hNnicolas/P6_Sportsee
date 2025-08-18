@@ -81,6 +81,8 @@ export default function TrainingFlow({
       const res = await axios.post("/api/training-plan/generate", payload, {
         headers: { "Content-Type": "application/json" },
       });
+      console.log("Réponse brute backend :", res.data);
+
       const data = res.data;
       console.log("JSON reçu :", data);
       // 4. Si le planning est présent dans la réponse
@@ -190,8 +192,11 @@ export default function TrainingFlow({
           </span>
 
           {trainingPlan.map((week, wIndex) => (
-            <div key={wIndex} className="w-full flex justify-center">
-              <div className="w-[90%] border border-gray-300 rounded-xl">
+            <div key={wIndex} className="w-full flex justify-center mb-6">
+              <div
+                className="w-[90%] border border-gray-300 rounded-xl"
+                style={{ margin: "20px" }}
+              >
                 {/* header semaine */}
                 <div
                   onClick={() => toggleWeek(wIndex)}
@@ -214,11 +219,15 @@ export default function TrainingFlow({
 
                 {/* détails */}
                 {openWeeks[wIndex] && (
-                  <div className="px-4 pb-4 space-y-4">
+                  <div
+                    className="px-4 pb-4 space-y-4"
+                    style={{ margin: "20px", marginBottom: "30px" }}
+                  >
                     {week.days.map((day, dIndex) => (
                       <div
                         key={dIndex}
                         className="border border-gray-300 bg-white rounded-lg p-4"
+                        style={{ margin: "20px" }}
                       >
                         <div className="flex justify-between mb-2">
                           <div>
@@ -232,11 +241,6 @@ export default function TrainingFlow({
                               {day.session}
                             </p>
                             <p className="text-gray-400 text-xs">
-                              {day.exercices[0]?.duree?.replace(
-                                " minutes",
-                                "min"
-                              )}
-                              {" • "}
                               {day.exercices[0]?.repos?.replace(
                                 " minutes",
                                 "min"
@@ -244,7 +248,7 @@ export default function TrainingFlow({
                             </p>
                           </div>
                           {day.exercices.length > 0 && (
-                            <span className="text-xs px-2 py-1 rounded-full bg-[#F2F3FF] text-[#4657F7] h-fit">
+                            <span className="text-xs px-2 py-1 rounded-full bg-[#F2F3FF] text-[#000000] h-fit">
                               {day.exercices[0].duree?.replace(
                                 " minutes",
                                 "min"
