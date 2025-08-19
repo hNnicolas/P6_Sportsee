@@ -33,7 +33,6 @@ export default async function handler(
       throw new Error("Clé API Mistral manquante dans .env.local");
     }
 
-    // Prompt spécifique pour générer un plan structuré et JSON valide
     const systemPrompt = `
 Tu es un coach sportif virtuel expert en course à pied.
 Génère un plan d'entraînement structuré au format JSON.
@@ -87,17 +86,18 @@ Règles :
       throw new Error("Mistral n'a pas renvoyé de contenu.");
     }
 
-    // Fonction utilitaire pour remplacer les accents dans les clés
+    console.log("Plan brut Mistral :", planJSON);
+
+    // Fonction utilitaire pour normaliser les clés après parsing
     function normalizeKeys(obj: any): any {
-      if (Array.isArray(obj)) {
-        return obj.map(normalizeKeys);
-      } else if (obj && typeof obj === "object") {
+      if (Array.isArray(obj)) return obj.map(normalizeKeys);
+      if (obj && typeof obj === "object") {
         const newObj: any = {};
         for (const key in obj) {
           const normalizedKey = key
             .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "") // supprime accents
-            .replace(/\s+/g, "_"); // remplace les espaces par _
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/\s+/g, "_");
           newObj[normalizedKey] = normalizeKeys(obj[key]);
         }
         return newObj;
@@ -105,25 +105,19 @@ Règles :
       return obj;
     }
 
-    // Après récupération du JSON de Mistral
-    let plan;
+    let parsedPlan;
     try {
-      const cleaned = planJSON
-        .trim()
-        .replace(/'/g, "_") // remplace les apostrophes
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, ""); // supprime les accents
-
-      const parsed = JSON.parse(cleaned);
-      plan = normalizeKeys(parsed);
+      parsedPlan = JSON.parse(planJSON); // Parse brut, pas de nettoyage agressif
     } catch (err) {
-      throw new Error(
-        "Le JSON retourné par Mistral est invalide : " + planJSON
-      );
+      console.error("JSON invalide reçu de Mistral :", planJSON);
+      throw new Error("Le JSON retourné par Mistral est invalide");
     }
+
+    const plan = normalizeKeys(parsedPlan);
 
     res.status(200).json({ plan });
   } catch (error: any) {
+    console.error("Erreur API training plan :", error);
     res.status(500).json({ error: error.message || "Erreur interne" });
   }
 }

@@ -81,7 +81,6 @@ export default function TrainingFlow({
       const res = await axios.post("/api/training-plan/generate", payload, {
         headers: { "Content-Type": "application/json" },
       });
-      console.log("Réponse brute backend :", res.data);
 
       const data = res.data;
       console.log("JSON reçu :", data);
@@ -102,6 +101,28 @@ export default function TrainingFlow({
 
   const toggleWeek = (i: number) => {
     setOpenWeeks((prev) => ({ ...prev, [i]: !prev[i] }));
+  };
+
+  // Générer et télécharger un .ics en utilisant librairie ics
+  const handleDownloadICS = async () => {
+    try {
+      const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+      const res = await axios.post(
+        "/api/training-plan/download-ics",
+        { trainingPlan, startDate, timezone: userTimezone },
+        { responseType: "blob" }
+      );
+
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `planning-${new Date().toISOString()}.ics`;
+      a.click();
+    } catch (err) {
+      console.error(err);
+      alert("Erreur du téléchargement ICS");
+    }
   };
 
   return (
@@ -311,13 +332,62 @@ export default function TrainingFlow({
               </div>
             </div>
           ))}
-
-          <button
-            onClick={() => setStep(3)}
-            className="px-6 py-2 mt-4 bg-gray-200 text-black rounded hover:bg-gray-300 transition"
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "16px",
+              marginTop: "16px",
+            }}
           >
-            ← Retour
-          </button>
+            <button
+              onClick={handleDownloadICS}
+              style={{
+                padding: "20px 16px",
+                minWidth: "200px",
+                backgroundColor: "#0B23F4",
+                color: "#fff",
+                borderRadius: "12px",
+                border: "2px solid transparent",
+                outline: "none",
+                cursor: "pointer",
+                fontSize: "14px",
+                transition: "background-color 0.3s",
+              }}
+              onMouseOver={(e) =>
+                (e.currentTarget.style.backgroundColor = "#0a1ecc")
+              }
+              onMouseOut={(e) =>
+                (e.currentTarget.style.backgroundColor = "#0B23F4")
+              }
+            >
+              Télécharger
+            </button>
+
+            <button
+              onClick={generateTrainingPlan}
+              style={{
+                padding: "20px 40px",
+                minWidth: "200px",
+                backgroundColor: "#0B23F4",
+                color: "#fff",
+                borderRadius: "12px",
+                border: "2px solid transparent",
+                outline: "none",
+                cursor: "pointer",
+                fontSize: "14px",
+                transition: "background-color 0.3s",
+              }}
+              onMouseOver={(e) =>
+                (e.currentTarget.style.backgroundColor = "#0a1ecc")
+              }
+              onMouseOut={(e) =>
+                (e.currentTarget.style.backgroundColor = "#0B23F4")
+              }
+            >
+              Régénérer un programme
+            </button>
+          </div>
         </div>
       )}
     </div>
