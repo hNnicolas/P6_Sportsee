@@ -54,13 +54,10 @@ export default function ProfilePage() {
         <div className="flex items-center">
           <div className="relative inline-block">
             <img
-              src="/logo.svg"
+              src="/images/logo.png"
               alt="Logo"
-              className="w-[120px] h-auto animate-[wave_1.5s_ease-in-out_infinite,pulse_3s_ease-in-out_infinite] origin-[70%_70%] z-10"
+              className="h-10 w-10 sm:h-12 sm:w-12 animate-wave absolute bottom-4 right-4"
             />
-          </div>
-          <div className="font-bold text-xl text-[#0b23f4] ml-2 select-none">
-            SPORTSEE
           </div>
         </div>
 
@@ -161,10 +158,16 @@ export default function ProfilePage() {
         </div>
       </main>
 
-      <footer className="bg-white w-full py-4 px-8 border-t border-gray-200 text-sm text-[#111111]">
+      <footer
+        className="w-full py-4 px-8 text-sm text-[#111111]"
+        style={{ backgroundColor: "#FFFFFF" }}
+      >
         <div className="max-w-[1500px] mx-auto flex justify-between items-center flex-wrap gap-4">
-          <div className="font-semibold">@Sportsee, Tous droits réservés</div>
-          <div className="flex items-center gap-6">
+          <div className="font-semibold" style={{ marginLeft: "20px" }}>
+            @Sportsee, Tous droits réservés
+          </div>
+
+          <div className="flex items-center" style={{ gap: "20px" }}>
             <Link
               href="/conditions"
               className="text-[#0B23F4] font-semibold hover:underline"
@@ -177,7 +180,11 @@ export default function ProfilePage() {
             >
               Contact
             </Link>
-            <img src="/logo.svg" alt="Logo Sportsee" className="w-8 h-8" />
+            <img
+              src="/images/logo-footer.png"
+              alt="Logo"
+              className="h-10 w-10 sm:h-12 sm:w-12 animate-wave border-none outline-none"
+            />
           </div>
         </div>
       </footer>
