@@ -184,9 +184,16 @@ export default function TrainingFlow({
       {/* Étape 4 */}
       {step === 4 && (
         <div className="flex flex-col items-center w-full max-w-md bg-white rounded-xl p-8 shadow-md gap-6">
-          <h2 className="text-xl font-semibold">
+          <h2
+            className="text-2xl font-semibold"
+            style={{
+              fontSize: "28px",
+              marginBottom: "10px",
+            }}
+          >
             Votre planning de la semaine
           </h2>
+
           <span className="text-sm text-gray-500 mb-1">
             Important pour définir un programme adapté
           </span>
@@ -194,23 +201,34 @@ export default function TrainingFlow({
           {trainingPlan.map((week, wIndex) => (
             <div key={wIndex} className="w-full flex justify-center mb-6">
               <div
-                className="w-[90%] border border-gray-300 rounded-xl"
-                style={{ margin: "20px" }}
+                className="w-[90%]"
+                style={{
+                  margin: "20px",
+                  border: "1px solid #E7E7E7",
+                  borderRadius: "8px",
+                }}
               >
                 {/* header semaine */}
                 <div
                   onClick={() => toggleWeek(wIndex)}
                   className="p-4 flex justify-between items-center cursor-pointer"
                 >
-                  <h3 className="font-semibold capitalize text-gray-800">
+                  <h3
+                    className="font-semibold capitalize text-gray-800"
+                    style={{ marginLeft: "40px" }}
+                  >
                     {week.week.replace("_", " ")}
                   </h3>
+
                   <span
-                    className="h-8 w-8 rounded-full flex items-center justify-center"
+                    className="rounded-full flex items-center justify-center"
                     style={{
+                      width: "30px",
+                      height: "30px",
                       backgroundColor: "#F2F3FF",
                       color: "#4657F7",
                       fontSize: "1.3rem",
+                      marginRight: "40px",
                     }}
                   >
                     {openWeeks[wIndex] ? "−" : "+"}
@@ -226,29 +244,59 @@ export default function TrainingFlow({
                     {week.days.map((day, dIndex) => (
                       <div
                         key={dIndex}
-                        className="border border-gray-300 bg-white rounded-lg p-4"
-                        style={{ margin: "20px" }}
+                        className="bg-white p-4"
+                        style={{
+                          margin: "20px",
+                          border: "1px solid #717171",
+                          borderRadius: "8px",
+                        }}
                       >
-                        <div className="flex justify-between mb-2">
+                        <div
+                          className="flex justify-between mb-2"
+                          style={{ marginLeft: "20px" }}
+                        >
                           <div>
                             <p className="text-sm text-gray-400 capitalize">
                               {day.day}
                             </p>
-                            <h4 className="font-semibold text-gray-800">
+                            <h4
+                              className="font-semibold text-gray-800"
+                              style={{
+                                fontSize: "22px",
+                                marginBottom: "-16px",
+                                marginTop: "10px",
+                              }}
+                            >
                               {day.exercices[0]?.nom ?? "Repos"}
                             </h4>
-                            <p className="text-gray-400 text-xs">
-                              {day.session}
-                            </p>
-                            <p className="text-gray-400 text-xs">
-                              {day.exercices[0]?.repos?.replace(
-                                " minutes",
-                                "min"
-                              )}
-                            </p>
+
+                            <div
+                              className="flex mb-3"
+                              style={{ color: "#707070", gap: "12px" }}
+                            >
+                              <p className="text-xs">{day.session}</p>
+                              <p className="text-xs">
+                                {day.exercices[0]?.repos?.replace(
+                                  " minutes",
+                                  "min"
+                                )}
+                              </p>
+                            </div>
                           </div>
                           {day.exercices.length > 0 && (
-                            <span className="text-xs px-2 py-1 rounded-full bg-[#F2F3FF] text-[#000000] h-fit">
+                            <span
+                              className="text-xs px-2 py-1 rounded-full h-fit"
+                              style={{
+                                backgroundColor: "#F2F3FF",
+                                color: "#000000",
+                                marginRight: "40px",
+                                marginTop: "60px",
+                                borderRadius: "25px",
+                                width: "60px",
+                                textAlign: "center",
+                                fontWeight: "bold",
+                              }}
+                            >
                               {day.exercices[0].duree?.replace(
                                 " minutes",
                                 "min"
