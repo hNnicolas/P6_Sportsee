@@ -170,14 +170,14 @@ export default function DashboardPage() {
 
           <div className="flex items-center" style={{ gap: "20px" }}>
             <Link
-              href="/conditions"
-              className="text-[#0B23F4] font-semibold hover:underline"
+              href="#"
+              className="text-[#111111] font-semibold no-underline hover:text-[#0B23F4]"
             >
               Conditions générales
             </Link>
             <Link
-              href="/contact"
-              className="text-[#0B23F4] font-semibold hover:underline"
+              href="#"
+              className="text-[#111111] font-semibold no-underline hover:text-[#0B23F4]"
             >
               Contact
             </Link>
