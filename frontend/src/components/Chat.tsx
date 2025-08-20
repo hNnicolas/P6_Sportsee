@@ -94,7 +94,7 @@ export default function Chat() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white max-w-[1000px] w-full mx-auto">
-      <div className="ml-auto flex items-center gap-1 mb-2">
+      <div className="ml-auto flex items-center gap-1 mt-[20px] mr-[10px]">
         <span className="text-xs" style={{ color: "#707070" }}>
           Fermer
         </span>
@@ -106,7 +106,7 @@ export default function Chat() {
         </button>
       </div>
 
-      <h1 className="text-center text-[#0B23F4]">
+      <h1 className="text-center text-[#0B23F4] font-inter text-[16px] mt-[60px]">
         Posez vos questions sur votre programme,
         <span className="block">vos performances ou vos objectifs</span>
       </h1>
@@ -114,11 +114,13 @@ export default function Chat() {
       <div className="flex-1 overflow-y-auto p-4">
         {messages.length === 0 && (
           <div className="flex items-center mb-4">
-            <img
-              src="/assets/botIcon.svg"
-              alt="Bot"
-              className="w-9 h-9 mr-2 rounded-full object-cover"
-            />
+            <div className="w-[38px] h-[38px] rounded-full bg-[#F4320C] flex items-center justify-center mr-2 mt-[320px]">
+              <img
+                src="/assets/botIcon.svg"
+                alt="Bot"
+                className="w-9 h-9 rounded-full object-cover"
+              />
+            </div>
             <TypingDots />
           </div>
         )}
@@ -168,27 +170,27 @@ export default function Chat() {
         )}
       </div>
 
-      <div className="p-4 border-t border-gray-200">
+      <div className="p-4">
         <div className="flex justify-center mt-10">
           <div className="relative w-full max-w-[1000px]">
             <input
               type="text"
               placeholder="Comment puis-je vous aider ?"
-              className="w-full h-[140px] pl-6 pr-16 rounded-xl focus:outline-none bg-white text-[#707070] border border-gray-300"
+              className="w-full h-[140px] pl-6 pr-20 rounded-xl focus:outline-none bg-white text-[#707070] border border-[#E7E7E7]"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
             />
             <button
               onClick={() => sendMessage()}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#0A24F5] hover:bg-blue-700 p-4 rounded-r-xl flex items-center justify-center"
+              className="absolute top-1/2 right-2 -translate-y-1/2 bg-[#0A24F5] hover:bg-blue-700 p-4 rounded-r-xl flex items-center justify-center"
             >
               <img src="/sendArrow.svg" alt="Envoyer" className="w-5 h-5" />
             </button>
           </div>
         </div>
 
-        <div className="mt-3 flex justify-between">
+        <div className="mt-3 flex justify-between mt-[30px]">
           {[
             "Comment améliorer mon endurance ?",
             "Que signifie mon score de récupération ?",

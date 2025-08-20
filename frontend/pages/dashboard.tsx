@@ -33,7 +33,7 @@ export default function DashboardPage() {
             </div>
 
             <div>
-              <nav className="flex gap-4" style={{ marginTop: "40px" }}>
+              <nav className="flex items-center gap-1 text-sm mt-[20px] w-[400px] mr-[100px] h-16 px-4 whitespace-nowrap overflow-hidden">
                 <Link href="/dashboard">Dashboard</Link>
                 <Link href="/chat">Coach AI</Link>
                 <Link href="/profile">Mon profil</Link>

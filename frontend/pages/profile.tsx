@@ -49,33 +49,51 @@ export default function ProfilePage() {
   const { profile, statistics } = userInfo;
 
   return (
-    <div className="bg-[#F2F3FF] min-h-screen flex flex-col text-[#111111] font-sans">
-      <header className="flex justify-between items-center mb-8">
+    <div className="bg-[#F2F3FF] h-screen flex flex-col text-[#111111] font-sans">
+      <header className="flex justify-between items-center px-6 py-3">
         <div className="flex items-center">
           <div className="relative inline-block">
             <img
-              src="/images/logo.png"
               alt="Logo"
-              className="h-10 w-10 sm:h-12 sm:w-12 animate-wave absolute bottom-4 right-4"
+              src="/images/logo.png"
+              className="h-8 w-8 absolute bottom-4 animate-wave"
+              style={{ left: "50px" }}
             />
           </div>
         </div>
 
         <div>
-          <nav>
-            <Link href="/dashboard">Dashboard</Link>
-            <Link href="/chat">Coach AI</Link>
-            <Link href="/profile">Mon profil</Link>
+          <nav className="flex items-center gap-1 text-sm mt-[20px] w-[400px] mr-[100px] h-16 px-4 whitespace-nowrap overflow-hidden">
+            <Link
+              href="/dashboard"
+              className="text-[#111111] hover:text-[#0B23F4]"
+            >
+              Dashboard
+            </Link>
+            <Link href="/chat" className="text-[#111111] hover:text-[#0B23F4]">
+              Coach AI
+            </Link>
+            <Link
+              href="/profile"
+              className="text-[#111111] hover:text-[#0B23F4]"
+            >
+              Mon profil
+            </Link>
             <span className="text-[#0B23F4] text-xs font-thin">|</span>
-            <button onClick={logout}>Se déconnecter</button>
+            <button
+              onClick={logout}
+              className="text-[#111111] hover:text-[#0B23F4] py-1 px-2"
+            >
+              Se déconnecter
+            </button>
           </nav>
         </div>
       </header>
 
-      <main className="max-w-[1500px] mx-auto w-full p-8 flex gap-10 flex-1">
-        <div className="bg-white rounded-xl shadow-md p-6 flex flex-col w-[320px] flex-shrink-0 gap-8">
-          <div className="flex items-center gap-4 bg-[var(--color-white)]">
-            <div className="w-[140px] h-[160px] overflow-hidden rounded-md group p-4 rounded-md shadow-sm cursor-pointer flex-shrink-0">
+      <main className="max-w-[980px] mx-auto w-full px-4 py-3 flex gap-6 flex-1 overflow-hidden mt-[80px]">
+        <div className="bg-white rounded-xl shadow-md p-4 flex flex-col w-[500px] flex-shrink-0 gap-4">
+          <div className="flex items-center gap-3 bg-[var(--color-white)] rounded-[20px] w-[380px] ml-[20px]">
+            <div className="w-[100px] h-[100px] overflow-hidden group p-2 shadow-sm cursor-pointer flex-shrink-0 m-[20px] rounded-[20px]">
               <img
                 src={profile.profilePicture}
                 alt="Avatar"
@@ -83,74 +101,91 @@ export default function ProfilePage() {
               />
             </div>
             <div>
-              <p className="text-xl font-semibold">
+              <p className="text-lg font-semibold">
                 {profile.firstName} {profile.lastName}
               </p>
-              <p className="text-[#707070] text-sm mt-1">
+              <p className="text-[#707070] text-xs mt-1">
                 Membre depuis le{" "}
                 {new Date(profile.createdAt).toLocaleDateString("fr-FR", {
                   day: "2-digit",
-                  month: "long",
+                  month: "short",
                   year: "numeric",
                 })}
               </p>
             </div>
           </div>
 
-          <div className="text-center bg-[var(--color-white)] p-6 pb-16 w-[80%] mx-auto rounded-[var(--border-radius)] shadow-md mb-6 min-h-[250px]">
-            <h2 className="text-lg font-semibold mb-2 text-[#111111]">
+          <div className="text-left bg-[var(--color-white)] p-4 w-[370px] h-[600px] mt-[30px] ml-[20px] rounded-[20px] shadow-md">
+            <h2 className="text-base mb-2 text-[#111111] font-inter ml-[40px]">
               Votre profil
             </h2>
-            <hr className="border-[#E7E7E7] mb-4" />
-            <ul className="text-[#707070] space-y-6">
-              <li>Âge : {profile.age} ans</li>
-              <li>Genre : {profile.gender === "female" ? "Femme" : "Homme"}</li>
-              <li>Taille : {profile.height} cm</li>
-              <li>Poids : {profile.weight} kg</li>
+            <hr className="border-[#E7E7E7] border-[0.5px] mb-3 w-[320px]" />
+            <ul className="text-[#707070] text-sm list-none">
+              <li style={{ marginBottom: "20px" }}>Âge : {profile.age} ans</li>
+              <li style={{ marginBottom: "20px" }}>
+                Genre : {profile.gender === "female" ? "Femme" : "Homme"}
+              </li>
+              <li style={{ marginBottom: "20px" }}>
+                Taille : {profile.height} cm
+              </li>
+              <li style={{ marginBottom: "20px" }}>
+                Poids : {profile.weight} kg
+              </li>
             </ul>
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col gap-6">
+        <div className="flex-1 flex flex-col gap-2 -ml-[50px]">
           <div>
-            <h2 className="text-xl font-semibold mb-1">Vos statistiques</h2>
-            <p className="text-sm text-[#707070]">
+            <h2
+              className="text-lg font-semibold mb-1"
+              style={{ marginLeft: "15px" }}
+            >
+              Vos statistiques
+            </h2>
+            <p
+              className="text-[10px] text-[#707070] whitespace-nowrap"
+              style={{ marginLeft: "15px" }}
+            >
               Depuis le{" "}
               {new Date(profile.createdAt).toLocaleDateString("fr-FR", {
                 day: "2-digit",
-                month: "long",
+                month: "short",
                 year: "numeric",
               })}
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-[#0B23F4] rounded-xl p-4 text-white">
-              <p className="text-sm mb-1">Temps total couru</p>
-              <p className="text-2xl font-semibold">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-[#0B23F4] rounded-xl p-3 text-white">
+              <p className="text-xs mb-1">Temps total couru</p>
+              <p className="text-lg font-semibold">
                 {Math.floor(statistics.totalDuration / 60)}h{" "}
                 {statistics.totalDuration % 60}min
               </p>
             </div>
-            <div className="bg-[#0B23F4] rounded-xl p-4 text-white">
-              <p className="text-sm mb-1">Calories brûlées</p>
-              <p className="text-2xl font-semibold">
+            <div className="bg-[#0B23F4] rounded-xl p-3 text-white">
+              <p className="text-xs mb-1">Calories brûlées</p>
+              <p className="text-lg font-semibold">
                 {Math.round(caloriesBurned)} cal
               </p>
             </div>
-            <div className="bg-[#0B23F4] rounded-xl p-4 text-white">
-              <p className="text-sm mb-1">Distance totale parcourue</p>
-              <p className="text-2xl font-semibold">
+            <div className="bg-[#0B23F4] rounded-xl p-3 text-white">
+              <p className="text-xs mb-1">Distance totale parcourue</p>
+              <p className="text-lg font-semibold">
                 {statistics.totalDistance} km
               </p>
             </div>
-            <div className="bg-[#0B23F4] rounded-xl p-4 text-white">
-              <p className="text-sm mb-1">Nombre de jours de repos</p>
-              <p className="text-2xl font-semibold">{restDays} jours</p>
+            <div className="bg-[#0B23F4] rounded-xl p-3 text-white">
+              <p className="text-xs mb-1">Nombre de jours de repos</p>
+              <p className="text-lg font-semibold">{restDays} jours</p>
             </div>
-            <div className="bg-[#0B23F4] rounded-xl p-4 text-white col-span-2">
-              <p className="text-sm mb-1">Nombre de sessions</p>
-              <p className="text-2xl font-semibold">
+            <div
+              className="bg-[#0B23F4] rounded-xl p-3 text-white col-span-2"
+              style={{ marginRight: "273px" }}
+            >
+              <p className="text-xs mb-1">Nombre de sessions</p>
+              <p className="text-lg font-semibold">
                 {statistics.totalSessions} sessions
               </p>
             </div>
@@ -160,11 +195,11 @@ export default function ProfilePage() {
 
       <footer
         className="w-full py-4 px-8 text-sm text-[#111111]"
-        style={{ backgroundColor: "#FFFFFF" }}
+        style={{ backgroundColor: "#FFFFFF", marginTop: "100px" }}
       >
         <div className="max-w-[1500px] mx-auto flex justify-between items-center flex-wrap gap-4">
           <div className="font-semibold" style={{ marginLeft: "20px" }}>
-            @Sportsee, Tous droits réservés
+            @Sportsee Tous droits réservés
           </div>
 
           <div className="flex items-center" style={{ gap: "20px" }}>
