@@ -142,7 +142,7 @@ export default function DashboardPage() {
           <div
             className="flex justify-center items-start rounded-xl shadow-md w-full max-w-[1000px] mx-auto my-8 p-6"
             style={{
-              backgroundColor: "white", // fond blanc
+              backgroundColor: "white",
               borderRadius: "20px",
             }}
           >
@@ -165,7 +165,7 @@ export default function DashboardPage() {
       >
         <div className="max-w-[1500px] mx-auto flex justify-between items-center flex-wrap gap-4">
           <div className="font-semibold" style={{ marginLeft: "20px" }}>
-            @Sportsee, Tous droits réservés
+            @Sportsee Tous droits réservés
           </div>
 
           <div className="flex items-center" style={{ gap: "20px" }}>

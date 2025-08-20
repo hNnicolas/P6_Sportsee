@@ -53,7 +53,7 @@ export default function DashboardCharts() {
     <div
       style={{
         padding: "2rem",
-        background: "#f6f7ff",
+        background: "#F2F3FF",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
@@ -90,6 +90,8 @@ export default function DashboardCharts() {
             flex: 1,
             maxWidth: "800px",
             margin: "0 auto",
+            height: "10px",
+            marginTop: "90px",
           }}
         >
           {/* Durée */}
