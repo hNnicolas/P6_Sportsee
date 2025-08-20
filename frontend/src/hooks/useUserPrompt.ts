@@ -7,7 +7,7 @@ type RecentRun = {
   avgHeartRate: number;
 };
 
-type UserProfile = {
+export type UserProfile = {
   level: string;
   age?: number;
   weightKg?: number;

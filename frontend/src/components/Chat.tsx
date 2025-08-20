@@ -1,8 +1,9 @@
 import { useState } from "react";
-import useUserInfo from "../hooks/useUserInfo";
 import { useAuth } from "../contexts/AuthContext";
-import TypingDots from "../components/TypingDots";
-import useUserPrompt from "../hooks/useUserPrompt";
+import useUserInfo from "../hooks/useUserInfo";
+import TypingDots from "./TypingDots";
+import useUserPrompt, { UserProfile } from "../hooks/useUserPrompt";
+
 import { X } from "lucide-react";
 
 interface Message {
@@ -20,9 +21,16 @@ export default function Chat() {
   const [botTyping, setBotTyping] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
 
-  // On récupère le niveau de l'utilisateur
   const userLevel = data?.profile?.level || "débutant";
-  const userPrompt = useUserPrompt(userLevel);
+  const userProfile: UserProfile = {
+    level: userLevel,
+    age: data?.profile.age,
+    weightKg: data?.profile.weight,
+    goal: "non renseigné",
+    recentRuns: [],
+  };
+
+  const userPrompt = useUserPrompt(userProfile);
 
   const sendMessage = async (text?: string) => {
     const messageToSend = text || input;
@@ -41,10 +49,7 @@ export default function Chat() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: messageToSend,
-          prompt: userPrompt,
-        }),
+        body: JSON.stringify({ message: messageToSend, prompt: userPrompt }),
       });
 
       if (!res.ok) {
@@ -53,7 +58,6 @@ export default function Chat() {
       }
 
       const data = await res.json();
-
       setMessages((prev) => [
         ...prev,
         {
@@ -103,7 +107,7 @@ export default function Chat() {
       </div>
 
       <h1 className="text-center text-[#0B23F4]">
-        Posez vos questions votre programme,
+        Posez vos questions sur votre programme,
         <span className="block">vos performances ou vos objectifs</span>
       </h1>
 
@@ -133,7 +137,6 @@ export default function Chat() {
                 className="w-9 h-9 mr-2 rounded-full object-cover"
               />
             )}
-
             <div
               className={`px-4 py-2 rounded-2xl max-w-xs break-words text-sm ${
                 msg.sender === "user"
@@ -143,7 +146,6 @@ export default function Chat() {
             >
               {msg.text}
             </div>
-
             {msg.sender === "user" && userAvatar && (
               <img
                 src={userAvatar}
@@ -177,7 +179,6 @@ export default function Chat() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
             />
-
             <button
               onClick={() => sendMessage()}
               className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#0A24F5] hover:bg-blue-700 p-4 rounded-r-xl flex items-center justify-center"

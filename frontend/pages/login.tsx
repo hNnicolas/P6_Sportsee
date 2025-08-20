@@ -20,7 +20,7 @@ export default function LoginPage() {
       <div className="flex-1 bg-[var(--color-background-light)] flex flex-col px-12 pt-12">
         <div className="flex items-center gap-3 mb-16 self-start">
           <img
-            src="/logo.png"
+            src="/images/logo.png"
             alt="Logo"
             className="h-12 w-12 animate-wave absolute bottom-4 right-4"
           />
