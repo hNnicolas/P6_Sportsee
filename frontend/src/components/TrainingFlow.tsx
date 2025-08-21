@@ -2,6 +2,7 @@ import { useState } from "react";
 import StartTraining from "./StartTraining";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBullseye, faCalendarDays } from "@fortawesome/free-solid-svg-icons";
+import useUserPrompt, { UserProfile } from "../hooks/useUserPrompt";
 import axios from "axios";
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
   availableDays: string[];
   age?: number;
   weight?: number;
+  recentRuns?: UserProfile["recentRuns"];
 }
 
 type Exercice = { nom: string; duree: string; repos: string };
@@ -24,6 +26,7 @@ export default function TrainingFlow({
   availableDays,
   age,
   weight,
+  recentRuns,
 }: Props) {
   const [step, setStep] = useState(1);
   const [startDate, setStartDate] = useState("");
@@ -33,6 +36,16 @@ export default function TrainingFlow({
   const [error, setError] = useState("");
   const [openWeeks, setOpenWeeks] = useState<{ [key: number]: boolean }>({});
 
+  // Hook qui génère un prompt adapté
+  const prompt = useUserPrompt({
+    level,
+    age,
+    weightKg: weight,
+    goal: localGoal,
+    recentRuns,
+  });
+
+  // Fonction pour aplatir le plan d'entrainement
   const flattenPlan = (plan: any): WeekPlan[] => {
     // Récupère le plan d'entrainement depuis l'objet
     const p = plan?.plan_entrainement;
@@ -74,6 +87,7 @@ export default function TrainingFlow({
       age,
       weight,
       startDate,
+      prompt: JSON.stringify(prompt),
     };
 
     try {
@@ -236,7 +250,11 @@ export default function TrainingFlow({
                 >
                   <h3
                     className="font-semibold capitalize text-gray-800"
-                    style={{ marginLeft: "40px" }}
+                    style={{
+                      marginLeft: "40px",
+                      fontSize: "30px",
+                      fontFamily: "'Inter', sans-serif",
+                    }}
                   >
                     {week.week.replace("_", " ")}
                   </h3>
@@ -277,53 +295,71 @@ export default function TrainingFlow({
                           style={{ marginLeft: "20px" }}
                         >
                           <div>
-                            <p className="text-sm text-gray-400 capitalize">
+                            <p
+                              className="text-sm text-gray-400 capitalize"
+                              style={{ marginLeft: "0px", marginBottom: "0px" }}
+                            >
                               {day.day}
                             </p>
-                            <h4
-                              className="font-semibold text-gray-800"
-                              style={{
-                                fontSize: "22px",
-                                marginBottom: "-16px",
-                                marginTop: "10px",
-                              }}
-                            >
-                              {day.exercices[0]?.nom ?? "Repos"}
-                            </h4>
 
-                            <div
-                              className="flex mb-3"
-                              style={{ color: "#707070", gap: "12px" }}
-                            >
-                              <p className="text-xs">{day.session}</p>
-                              <p className="text-xs">
-                                {day.exercices[0]?.repos?.replace(
-                                  " minutes",
-                                  "min"
-                                )}
-                              </p>
-                            </div>
+                            {/* mapping des exercices */}
+                            {day.exercices.length === 0 ? (
+                              <h4 className="font-semibold text-gray-800">
+                                Repos
+                              </h4>
+                            ) : (
+                              day.exercices.map((ex, eIndex) => (
+                                <div
+                                  key={eIndex}
+                                  className="flex items-center mb-3"
+                                  style={{ width: "750px" }}
+                                >
+                                  <div>
+                                    <h4
+                                      className="font-semibold text-gray-800"
+                                      style={{
+                                        fontSize: "22px",
+                                        marginTop: "10px",
+                                      }}
+                                    >
+                                      {ex.nom}
+                                    </h4>
+                                    <div
+                                      className="flex mb-1"
+                                      style={{ color: "#707070", gap: "12px" }}
+                                    >
+                                      <p
+                                        className="text-xs"
+                                        style={{ marginTop: "-20px" }}
+                                      >
+                                        {day.session}
+                                      </p>
+                                      <p
+                                        className="text-xs"
+                                        style={{ marginTop: "-20px" }}
+                                      >
+                                        {ex.repos?.replace(" minutes", "min")}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <span
+                                    className="text-xs px-2 py-1 rounded-full h-fit ml-auto mr-[25px]"
+                                    style={{
+                                      backgroundColor: "#F2F3FF",
+                                      color: "#000000",
+                                      borderRadius: "25px",
+                                      width: "60px",
+                                      textAlign: "center",
+                                      fontWeight: "bold",
+                                      marginRight: "25px", // optionnel si tu veux laisser un petit espace du bord
+                                    }}
+                                  >
+                                    {ex.duree?.replace(" minutes", "min")}
+                                  </span>
+                                </div>
+                              ))
+                            )}
                           </div>
-                          {day.exercices.length > 0 && (
-                            <span
-                              className="text-xs px-2 py-1 rounded-full h-fit"
-                              style={{
-                                backgroundColor: "#F2F3FF",
-                                color: "#000000",
-                                marginRight: "40px",
-                                marginTop: "60px",
-                                borderRadius: "25px",
-                                width: "60px",
-                                textAlign: "center",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              {day.exercices[0].duree?.replace(
-                                " minutes",
-                                "min"
-                              )}
-                            </span>
-                          )}
                         </div>
                       </div>
                     ))}
@@ -332,6 +368,7 @@ export default function TrainingFlow({
               </div>
             </div>
           ))}
+
           <div
             style={{
               display: "flex",
