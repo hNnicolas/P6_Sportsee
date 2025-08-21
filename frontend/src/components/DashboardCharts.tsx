@@ -74,8 +74,19 @@ export default function DashboardCharts() {
       <div style={{ display: "flex", gap: "2rem" }}>
         {/* Donut */}
         <div style={{ flex: 1 }}>
-          <h4 style={{ marginBottom: 4, color: "#707070" }}>Cette semaine</h4>
-          <p style={{ fontSize: 12, color: "#707070", marginTop: 0 }}>
+          <h4
+            style={{ marginBottom: 4, color: "#707070", marginLeft: "-30px" }}
+          >
+            Cette semaine
+          </h4>
+          <p
+            style={{
+              fontSize: 12,
+              color: "#707070",
+              marginTop: 0,
+              marginLeft: "-30px",
+            }}
+          >
             Du 23/06/2025 au 30/06/2025
           </p>
           <WeeklyGoalDonut completed={completedGoal} total={totalGoal} />
@@ -89,7 +100,7 @@ export default function DashboardCharts() {
             gap: "1rem",
             flex: 1,
             maxWidth: "800px",
-            margin: "0 auto",
+            marginLeft: "-30px",
             height: "10px",
             marginTop: "90px",
           }}

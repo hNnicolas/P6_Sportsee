@@ -14,30 +14,80 @@ export default function UserStatistics({
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: "1.5rem",
+        gap: "1rem",
         backgroundColor: "white",
-        padding: "0.5rem",
+        padding: "1rem",
         borderRadius: "0.5rem",
-        marginLeft: "auto",
-        width: "fit-content",
+        width: "100%",
+        maxWidth: "220px",
+        margin: "0 auto",
+        boxSizing: "border-box",
       }}
     >
       {/* Durée parcourue */}
-      <div className="bg-white p-6 rounded-xl shadow-md flex items-center justify-center w-[200px] gap-4">
-        <span className="text-[#0B23F4] text-2xl font-bold">
+      <div
+        style={{
+          backgroundColor: "white",
+          padding: "1rem",
+          borderRadius: "1rem",
+          boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+        }}
+      >
+        <span
+          style={{
+            color: "#0B23F4",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+          }}
+        >
           {Number(duration || 0).toFixed(1)}
         </span>
-
-        <span className="text-[#B6BDFC] text-sm ml-2">Minutes</span>
+        <span
+          style={{
+            color: "#B6BDFC",
+            fontSize: "0.875rem",
+          }}
+        >
+          Minutes
+        </span>
       </div>
 
       {/* Distance parcourue */}
-      <div className="bg-white p-6 rounded-xl shadow-md flex items-center justify-center w-[200px] gap-4">
-        <span className="text-[#F4320C] text-2xl font-bold">
+      <div
+        style={{
+          backgroundColor: "white",
+          padding: "1rem",
+          borderRadius: "1rem",
+          boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+        }}
+      >
+        <span
+          style={{
+            color: "#F4320C",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+          }}
+        >
           {Number(distance || 0).toFixed(1)}
         </span>
-
-        <span className="text-[#FCC1B6] text-sm">Kilomètres</span>
+        <span
+          style={{
+            color: "#FCC1B6",
+            fontSize: "0.875rem",
+          }}
+        >
+          Kilomètres
+        </span>
       </div>
     </div>
   );

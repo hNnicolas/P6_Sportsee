@@ -374,7 +374,7 @@ export default function TrainingFlow({
               display: "flex",
               justifyContent: "center",
               gap: "16px",
-              marginTop: "16px",
+              marginBottom: "20px",
             }}
           >
             <button

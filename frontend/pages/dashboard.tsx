@@ -33,7 +33,7 @@ export default function DashboardPage() {
             </div>
 
             <div>
-              <nav className="flex items-center gap-1 text-sm mt-[20px] w-[400px] mr-[100px] h-16 px-4 whitespace-nowrap overflow-hidden">
+              <nav className="flex items-center gap-1 text-sm mt-[20px] w-full max-w-[500px]mr-[100px] h-16 px-4 whitespace-nowrap overflow-hidden">
                 <Link href="/dashboard">Dashboard</Link>
                 <Link href="/chat">Coach AI</Link>
                 <Link href="/profile">Mon profil</Link>
@@ -46,33 +46,35 @@ export default function DashboardPage() {
           {/* Div chatbot */}
           <div
             style={{
-              marginTop: "60px",
+              marginTop: "100px",
               marginBottom: "30px",
               backgroundColor: "white",
-              padding: "30px",
-              width: "1000px",
+              padding: "20px",
               borderRadius: "20px",
+              maxWidth: "950px",
             }}
-            className="flex items-center justify-between mx-auto"
+            className="flex items-center justify-between mx-auto w-full max-w-[900px] overflow-hidden whitespace-nowrap"
           >
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 min-w-0">
               <img
                 src="/assets/boticon.svg"
                 alt="Chatbot Logo"
-                className="h-10 w-10 sm:h-12 sm:w-12"
+                className="h-10 w-10 sm:h-12 sm:w-12 flex-shrink-0"
                 style={{
                   filter:
                     "invert(20%) sepia(97%) saturate(6000%) hue-rotate(205deg) brightness(95%) contrast(100%)",
                 }}
               />
-              <span className="text-[#0B23F4] font-medium text-[18px]">
+              <span className="text-[#0B23F4] font-medium text-[18px] truncate">
                 Posez vos questions sur votre programme, vos performances, vos
                 objectifs.
               </span>
             </div>
+
             <Link
               href="/chat"
-              className="bg-[#0B23F4] text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition text-center no-underline inline-block w-[200px] h-[29px]"
+              className="bg-[#0B23F4] text-white px-[15px] py-[15px] rounded-lg hover:bg-blue-700 transition 
+              text-center no-underline inline-block whitespace-nowrap flex-shrink-0 ml-4"
             >
               Lancer une conversation
             </Link>
@@ -81,7 +83,7 @@ export default function DashboardPage() {
           {/* Section profil */}
           <section className="flex flex-col gap-6">
             <div
-              className="flex items-center justify-between w-[1060px] mx-auto p-4 overflow-hidden rounded-[20px]"
+              className="flex items-center justify-between w-full max-w-[1000px] mx-auto p-4 overflow-hidden rounded-[20px]"
               style={{
                 background: "linear-gradient(to bottom, #FEFEFF, #F7F8FF)",
               }}
@@ -130,8 +132,11 @@ export default function DashboardPage() {
           </section>
 
           {/* Graphiques */}
-          <div style={{ marginTop: "20px", marginBottom: "50px" }}>
-            <h2 className="text-[#111111] text-xl font-bold">
+          <div style={{ marginTop: "20px", marginBottom: "0px" }}>
+            <h2
+              className="text-[#111111] text-xl font-bold"
+              style={{ marginLeft: "10px", marginTop: "100px" }}
+            >
               Vos dernières performances
             </h2>
 
