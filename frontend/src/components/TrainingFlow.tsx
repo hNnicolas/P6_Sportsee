@@ -141,20 +141,33 @@ export default function TrainingFlow({
 
   return (
     <div className="flex justify-center items-center w-full p-6">
-      {/* Étape 1 */}
+      {/* Step 1 */}
       {step === 1 && <StartTraining onStart={() => setStep(2)} />}
 
-      {/* Étape 2 */}
+      {/* Step 2 */}
       {step === 2 && (
-        <div className="flex flex-col items-center gap-4 w-full max-w-md bg-white rounded-xl p-8 shadow-md">
+        <div className="flex flex-col items-center gap-4 bg-white rounded-xl p-8 shadow-md w-[1000px] h-[450px]">
           <FontAwesomeIcon
             icon={faBullseye}
-            size="3x"
-            className="text-[#0B23F4]"
+            className="text-[#0B23F4] mt-[50px]"
+            style={{ fontSize: "80px" }}
           />
-          <h2 className="text-xl font-semibold">
+
+          <h2 className="font-semibold" style={{ fontSize: "30px" }}>
             Quel est votre objectif principal ?
           </h2>
+          <span
+            style={{
+              fontFamily: "Inter, sans-serif",
+              color: "#000000",
+              fontSize: "16px",
+              marginTop: "-20px",
+              marginBottom: "20px",
+            }}
+          >
+            Choissisez l'objectif qui vous motive le plus
+          </span>
+
           <div className="w-full flex justify-center">
             <div className="w-1/3 flex flex-col">
               <label className="mb-2 text-[#707070]">Objectif</label>
@@ -162,13 +175,24 @@ export default function TrainingFlow({
                 type="text"
                 value={localGoal}
                 onChange={(e) => setLocalGoal(e.target.value)}
-                className="w-full h-16 p-3 border rounded text-[#707070] focus:outline-none focus:ring-2 focus:ring-[#0B23F4]"
+                style={{
+                  padding: "20px",
+                  marginTop: "2px",
+                  borderRadius: "10px",
+                  border: "1px solid #717171",
+                }}
+                className="w-full text-[#707070] focus:outline-none focus:ring-2 focus:ring-[#0B23F4]"
               />
             </div>
           </div>
           <button
             onClick={() => setStep(3)}
-            className="px-6 py-2 bg-[#0B23F4] text-white rounded hover:bg-blue-700 transition"
+            style={{
+              padding: "15px",
+              width: "150px",
+              fontSize: "16px",
+            }}
+            className="bg-[#0B23F4] text-white rounded hover:bg-blue-700 transition"
           >
             Suivant
           </button>
@@ -177,15 +201,33 @@ export default function TrainingFlow({
 
       {/* Étape 3 */}
       {step === 3 && (
-        <div className="flex flex-col items-center gap-4 w-full max-w-md bg-white rounded-xl p-8 shadow-md">
+        <div className="flex flex-col items-center gap-4 bg-white rounded-xl p-8 shadow-md w-[1000px] h-[450px]">
           <FontAwesomeIcon
             icon={faCalendarDays}
             size="3x"
-            className="text-[#0B23F4]"
+            className="text-[#0B23F4] mt-[50px]"
+            style={{ fontSize: "80px", marginBottom: "20px" }}
           />
-          <h2 className="text-xl font-semibold text-black">
-            Quand souhaitez-vous commencer ?
+          <h2
+            className="font-semibold"
+            style={{ fontSize: "30px", marginTop: "0px" }}
+          >
+            Quand souhaitez-vous commencer votre{" "}
+            <span className="block text-center">programme ?</span>
           </h2>
+          <span
+            style={{
+              fontFamily: "Inter, sans-serif",
+              color: "#000000",
+              fontSize: "14px",
+              marginTop: "-15px",
+              marginBottom: "20px",
+            }}
+          >
+            Générer un programme d'une semaine à partir de la date de votre
+            choix
+          </span>
+
           <div className="w-full flex justify-center">
             <div className="w-1/3 flex flex-col">
               <label className="mb-2 text-[#707070]">Date début</label>
@@ -193,6 +235,14 @@ export default function TrainingFlow({
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
+                style={{
+                  padding: "20px",
+                  marginTop: "5px",
+                  marginBottom: "10px",
+                  borderRadius: "10px",
+                  border: "1px solid #717171",
+                  width: "275px",
+                }}
                 className="w-full h-16 p-3 border rounded text-[#707070] focus:outline-none focus:ring-2 focus:ring-[#0B23F4]"
               />
             </div>
@@ -201,14 +251,22 @@ export default function TrainingFlow({
           <div className="flex gap-4">
             <button
               onClick={() => setStep(2)}
-              className="w-12 h-8 flex items-center justify-center bg-gray-200 rounded-full"
+              style={{ backgroundColor: "#FFFFFF" }}
+              className="w-[50px] h-[50px] mt-[10px] flex items-center justify-center border border-[#717171] rounded-[10px]"
             >
               ←
             </button>
+
             <button
               onClick={generateTrainingPlan}
               disabled={loading}
-              className="px-6 py-2 bg-[#0B23F4] text-white rounded hover:bg-blue-700 transition"
+              style={{
+                padding: "15px",
+                width: "250px",
+                fontSize: "16px",
+                marginBottom: "20px",
+              }}
+              className="px-6 py-2 bg-[#0B23F4] text-white rounded hover:bg-blue-700 transition border-none outline-none"
             >
               {loading ? "Génération..." : "Générer mon planning"}
             </button>
@@ -351,7 +409,7 @@ export default function TrainingFlow({
                                       width: "60px",
                                       textAlign: "center",
                                       fontWeight: "bold",
-                                      marginRight: "25px", // optionnel si tu veux laisser un petit espace du bord
+                                      marginRight: "25px",
                                     }}
                                   >
                                     {ex.duree?.replace(" minutes", "min")}
