@@ -201,7 +201,7 @@ export default function TrainingFlow({
 
       {/* Étape 3 */}
       {step === 3 && (
-        <div className="flex flex-col items-center gap-4 bg-white rounded-xl p-8 shadow-md w-[1000px] h-[450px]">
+        <div className="flex flex-col items-center gap-4 bg-white rounded-xl p-8 shadow-md w-[1000px] h-[550px]">
           <FontAwesomeIcon
             icon={faCalendarDays}
             size="3x"
