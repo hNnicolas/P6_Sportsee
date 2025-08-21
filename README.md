@@ -33,12 +33,19 @@ L’objectif de ce projet est de recréer la page profil d’un utilisateur et d
 
 ## Screenshots
 
-Les captures d’écran sont disponibles dans `/public/images/screenshot` :
+### Page de connexion
+![Login](frontend/public/images/screenshot/screenshot_login.png)
 
-- `screenshot_login.png` : Page de connexion
-- `screenshot_profil.png` : Page profil utilisateur
-- `screenshot_dashboard-1.png` et `screenshot_dashboard-2.png` : Dashboard et graphiques
-- `screenshot_plan_entrainement.png` : Plan d’entraînement généré
+### Page profil utilisateur
+![Profil](frontend/public/images/screenshot/screenshot_profil.png)
+
+### Dashboard et graphiques
+![Dashboard 1](frontend/public/images/screenshot/screenshot_dashboard-1.png)
+![Dashboard 2](frontend/public/images/screenshot/screenshot_dashboard-2.png)
+
+### Plan d’entraînement généré
+![Plan d'entraînement](frontend/public/images/screenshot/screenshot_plan_entrainement.png)
+
 
 ---
 
