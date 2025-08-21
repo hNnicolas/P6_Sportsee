@@ -38,7 +38,7 @@ Les captures d’écran sont disponibles dans `/public/images/screenshot` :
 - `screenshot_login.png` : Page de connexion
 - `screenshot_profil.png` : Page profil utilisateur
 - `screenshot_dashboard-1.png` et `screenshot_dashboard-2.png` : Dashboard et graphiques
-- `screenshot-plan-entrainement.png` : Plan d’entraînement généré
+- `screenshot_plan_entrainement.png` : Plan d’entraînement généré
 
 ---
 
