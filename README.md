@@ -48,19 +48,24 @@ L’objectif de ce projet est de recréer la page profil d’un utilisateur et d
 
 
 ---
+## Cloner le projet
+
+Pour cloner le projet depuis GitHub, utilisez la commande suivante :
+
+```bash
+git clone https://github.com/hNnicolas/P6_Sportsee.git
+cd P6_Sportsee
 
 ## Installation
 
 ### Backend
-
-1. **Se placer dans le dossier backend**
 
 ```bash
 cd backend
 npm install
 npm run build
 npm start
-``
+
 Frontend
 
 Se placer dans le dossier frontend
