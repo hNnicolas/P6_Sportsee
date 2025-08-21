@@ -25,7 +25,7 @@ L’objectif de ce projet est de recréer la page profil d’un utilisateur et d
 - Dashboard avec graphiques Recharts pour l’activité sportive.
 - Page profil dynamique affichant les informations utilisateur.
 - Plan d’entraînement généré via IA.
-- Gestion des étapes de création de plan d’entraînement (Step 1 à Step 3).
+- Gestion des étapes de création de plan d’entraînement (Step 1 à Step 4).
 - UI responsive pour desktop avec effets visuels et animations sur les boutons.
 - Prompts IA pour recommandations personnalisées.
 
