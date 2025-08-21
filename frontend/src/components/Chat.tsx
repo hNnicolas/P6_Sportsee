@@ -157,7 +157,12 @@ export default function Chat() {
             )}
           </div>
         ))}
-
+        <img
+          src="/assets/dots.svg"
+          alt="loading"
+          className="w-17 h-6"
+          style={{ marginLeft: "35px" }}
+        />
         {botTyping && (
           <div className="flex items-center mb-4">
             <img

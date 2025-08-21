@@ -27,8 +27,10 @@ export default function ProfilePage() {
   } = useUserActivity(token, startWeekStr, endWeekStr);
 
   useEffect(() => {
-    if (!user) router.replace("/login");
-  }, [user, router]);
+    if (!token) {
+      router.replace("/login");
+    }
+  }, [token, router]);
 
   if (isLoading || activityLoading) return <p>Chargement...</p>;
   if (error) return <p>Erreur utilisateur : {error}</p>;

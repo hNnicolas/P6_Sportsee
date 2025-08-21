@@ -1,5 +1,12 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 import { loginUser, getUserById } from "@/src/api/auth";
 
 interface AuthContextType {
@@ -12,25 +19,42 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<any | null>(null);
-  const [token, setToken] = useState<string | null>(null);
   const router = useRouter();
+  const [token, setToken] = useState<string | null>(
+    Cookies.get("token") || null
+  );
+  const [user, setUser] = useState<any | null>(null);
+
+  // Récupération automatique des infos utilisateur si token présent
+  useEffect(() => {
+    if (!token) return;
+
+    getUserById(token)
+      .then((userData) => setUser(userData))
+      .catch(() => {
+        Cookies.remove("token");
+        setToken(null);
+        setUser(null);
+      });
+  }, [token]);
 
   const login = async (username: string, password: string) => {
     try {
-      const { token, userId } = await loginUser(username, password);
-      const user = await getUserById(token);
-
+      const { token } = await loginUser(username, password);
+      Cookies.set("token", token, { expires: 7 });
       setToken(token);
-      setUser(user);
+
+      const userData = await getUserById(token);
+      setUser(userData);
 
       router.push("/profile");
     } catch (error) {
-      alert("Erreur de connexion : " + (error as Error).message);
+      console.error("Erreur login:", error);
     }
   };
 
   const logout = () => {
+    Cookies.remove("token");
     setToken(null);
     setUser(null);
     router.push("/login");
