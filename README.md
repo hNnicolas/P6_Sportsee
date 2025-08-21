@@ -1,4 +1,4 @@
-# Projet SportSee – Dashboard Utilisateur avec React et IA
+# ![SportSee Logo](frontend/public/images/logo.png) – Projet Dashboard Utilisateur avec React et IA
 
 ## Description
 
