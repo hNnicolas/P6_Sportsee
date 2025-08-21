@@ -94,7 +94,7 @@ export default function ProfilePage() {
 
       <main className="max-w-[980px] xl:max-w-[1400px] mx-auto w-full px-4 xl:px-8 py-3 xl:py-6 flex gap-6 xl:gap-10 flex-1 overflow-hidden mt-[80px] xl:mt-16">
         <div className="bg-white rounded-xl shadow-md p-4 xl:p-6 flex flex-col w-[500px] xl:w-[400px] 2xl:w-[450px] flex-shrink-0 gap-4 xl:gap-6">
-          <div className="flex items-center gap-3 xl:gap-4 bg-[var(--color-white)] rounded-[20px] w-[380px] xl:w-full ml-[20px] xl:ml-0">
+          <div className="flex items-center gap-3 xl:gap-4 bg-[var(--color-white)] rounded-[20px] w-[400px] xl:w-full ml-[20px] xl:ml-0">
             <div className="w-[100px] h-[100px] xl:w-[120px] xl:h-[140px] overflow-hidden group p-2 xl:p-4 shadow-sm cursor-pointer flex-shrink-0 m-[20px] xl:m-0 rounded-[20px]">
               <img
                 src={profile.profilePicture}
@@ -117,7 +117,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          <div className="text-left bg-[var(--color-white)] p-4 xl:p-6 w-[370px] xl:w-full h-[600px] xl:h-auto mt-[30px] xl:mt-0 ml-[20px] xl:ml-0 rounded-[20px] xl:rounded-[var(--border-radius)] shadow-md xl:pb-16">
+          <div className="text-left bg-[var(--color-white)] p-4 xl:p-6 w-[400px] xl:w-full h-[600px] xl:h-auto mt-[30px] xl:mt-0 ml-[20px] xl:ml-0 rounded-[20px] xl:rounded-[var(--border-radius)] shadow-md xl:pb-16">
             <h2 className="text-base xl:text-lg mb-2 xl:mb-4 text-[#111111] font-inter ml-[40px] xl:ml-0">
               Votre profil
             </h2>
