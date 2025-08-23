@@ -62,29 +62,44 @@ Voici les utilisateurs disponibles pour tester l’authentification :
 
 
 ---
-## 📥 Cloner le projet
+### 📥 Cloner le projet
 
 Clonez le dépôt depuis GitHub et placez-vous dans le dossier principal :
 
 ```bash
 git clone https://github.com/hNnicolas/P6_Sportsee.git
 cd P6_Sportsee
-
+```
 ---
-⚙️ Installation
-🔧 Backend
+**⚙️ Installation** <br>
+**Backend**
 
 Se placer dans le dossier backend :
 
+```bash
 cd backend
+```
+```bash
 npm install
+```
+```bash
 npm run build
+```
+**Lancer le serveur**
+```bash
 npm start
-
-*** Frontend ***
+```
+**Frontend**
 
 ## Se placer dans le dossier frontend
-
+```bash
 cd frontend
+```
+**Installer les dépendances**
+```bash
 npm install
+```
+**Lancer le projet**
+```bash
 npm run dev
+```
