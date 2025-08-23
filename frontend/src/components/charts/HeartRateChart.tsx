@@ -162,11 +162,12 @@ export default function HeartRateChart({ data }: HeartRateChartProps) {
       <div
         style={{
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "flex-start",
           flexWrap: "wrap",
           gap: "1rem",
           fontSize: "0.9rem",
           marginTop: 10,
+          marginLeft: "35px",
           color: "#666",
         }}
       >
