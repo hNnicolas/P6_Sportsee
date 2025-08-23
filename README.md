@@ -1,33 +1,47 @@
-# ![SportSee Logo](frontend/public/images/logo.png) – Projet Dashboard Utilisateur avec React et IA
+# ![SportSee Logo](frontend/public/images/logo.png) <br> Projet Dashboard Utilisateur avec React et Feature IA with Mistral API 
 
-## Description
+## 📖 Description
 
-L’objectif de ce projet est de recréer la page profil d’un utilisateur et d’implémenter une authentification avec React et NextJS. Le projet inclut également un dashboard sportif avec visualisation des données, des fonctionnalités IA et la gestion d’un plan d’entraînement.
+L’objectif de ce projet est de recréer la page **profil utilisateur** et d’implémenter une **authentification sécurisée** avec React et NextJS.  
+Il inclut également :  
 
----
-
-## Technologies utilisées
-
-- **NextJS** : Framework React utilisé pour sa facilité d’intégration avec une API IA et son routing intégré.
-- **React** : Gestion des composants et de l’UI.
-- **Context API** : Pour la gestion d’état globale (authentification, données utilisateur, etc.).
-- **NodeJS (Backend)** : Fournit l’API avec 3 utilisateurs et leurs mots de passe.
-- **Fetch / Axios** : Pour gérer les requêtes HTTP vers le backend.
-- **Recharts** : Pour visualiser les statistiques et l’activité sportive.
-- **CSS / Tailwind** : Version desktop uniquement (>1024x768 px).
-- **Postman** : Pour tester les premières requêtes à l’API.
+- Un **dashboard sportif** avec visualisation des données via Recharts.  
+- Une **intégration IA (Mistral API)** pour générer des recommandations et plans d’entraînement personnalisés.  
+- Une gestion de **workflow interactif (Step 1 → Step 4)** pour guider l’utilisateur dans la création de son plan d’entraînement.  
 
 ---
 
-## Fonctionnalités
+## 🛠️ Technologies utilisées
 
-- Authentification utilisateur avec maintien de session.
-- Dashboard avec graphiques Recharts pour l’activité sportive.
-- Page profil dynamique affichant les informations utilisateur.
-- Plan d’entraînement généré via IA.
-- Gestion des étapes de création de plan d’entraînement (Step 1 à Step 4).
-- UI responsive pour desktop avec effets visuels et animations sur les boutons.
-- Prompts IA pour recommandations personnalisées.
+- **NextJS** : Framework React avec routing intégré et support SSR/CSR.  
+- **React** : Construction de l’UI basée sur des composants.  
+- **Context API** : Gestion d’état globale (authentification, utilisateur, sessions).  
+- **NodeJS (Backend)** : Fournit l’API avec les données utilisateurs.  
+- **Mistral API** : Génération de plans d’entraînement et prompts personnalisés.  
+- **Fetch / Axios** : Requêtes HTTP vers le backend & l’API IA.  
+- **Recharts** : Visualisation des statistiques sportives.  
+- **TailwindCSS** : UI responsive desktop avec animations.  
+- **Postman** : Tests des endpoints API.  
+
+---
+
+## 🚀 Fonctionnalités principales
+
+- ✅ Authentification avec maintien de session (login/logout).  
+- ✅ Dashboard interactif avec graphiques **Recharts**.  
+- ✅ Page profil dynamique affichant les données personnelles.  
+- ✅ Génération de **plans d’entraînement via IA (Mistral API)**.  
+- ✅ Workflow guidé **(Step 1 → Step 4)** pour la création de programme.  
+- ✅ UI desktop only (>1024x768 px) avec animations sur les boutons. 
+---
+
+## 👤 Accès Utilisateurs (backend mock)
+
+Voici les utilisateurs disponibles pour tester l’authentification :  
+
+- **username** : `sophiemartin` | **password** : `password123`  
+- **username** : `emmaleroy` | **password** : `password789`  
+- **username** : `marcdubois` | **password** : `password456`  
 
 ---
 
@@ -48,28 +62,29 @@ L’objectif de ce projet est de recréer la page profil d’un utilisateur et d
 
 
 ---
-## Cloner le projet
+## 📥 Cloner le projet
 
-Pour cloner le projet depuis GitHub, utilisez la commande suivante :
+Clonez le dépôt depuis GitHub et placez-vous dans le dossier principal :
 
 ```bash
 git clone https://github.com/hNnicolas/P6_Sportsee.git
 cd P6_Sportsee
 
-## Installation
+---
+⚙️ Installation
+🔧 Backend
 
-### Backend
+Se placer dans le dossier backend :
 
-```bash
 cd backend
 npm install
 npm run build
 npm start
 
-Frontend
+*** Frontend ***
 
-Se placer dans le dossier frontend
+## Se placer dans le dossier frontend
+
 cd frontend
 npm install
 npm run dev
-```
