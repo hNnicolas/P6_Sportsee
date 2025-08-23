@@ -5,7 +5,8 @@
 L’objectif de ce projet est de recréer la page **profil utilisateur** et d’implémenter une **authentification sécurisée** avec React et NextJS.  
 Il inclut également :  
 
-- Un **dashboard sportif** avec visualisation des données via Recharts.  
+- Un **dashboard sportif** avec visualisation des données via Recharts.
+- Discussion ave chat BOT avec des réponses intérractives et usage de prompt avec Mistral API
 - Une **intégration IA (Mistral API)** pour générer des recommandations et plans d’entraînement personnalisés.  
 - Une gestion de **workflow interactif (Step 1 → Step 4)** pour guider l’utilisateur dans la création de son plan d’entraînement.  
 
