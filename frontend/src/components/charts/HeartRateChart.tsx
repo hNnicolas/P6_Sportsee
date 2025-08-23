@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ComposedChart,
   Bar,
@@ -8,22 +8,51 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface HeartRateChartProps {
   data: { day: string; min: number; max: number; avg: number }[];
 }
 
 export default function HeartRateChart({ data }: HeartRateChartProps) {
-  const daysOrder = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
-  const orderedData = [...data].sort(
-    (a, b) => daysOrder.indexOf(a.day) - daysOrder.indexOf(b.day)
-  );
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Calcul du BPM moyen de la semaine
+  const daysOrder = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
+  const sortedDays = data
+    .map((d) => d.day)
+    .sort((a, b) => daysOrder.indexOf(a) - daysOrder.indexOf(b));
+
+  const visibleDays = sortedDays.slice(currentIndex, currentIndex + 4);
+
+  const dataForChart = visibleDays.map((day) => {
+    const found = data.find((d) => d.day === day);
+    return found || { day, min: 0, max: 0, avg: 0 };
+  });
+
   const weeklyAvg =
     Math.round(
-      orderedData.reduce((sum, item) => sum + item.avg, 0) / orderedData.length
+      dataForChart.reduce((sum, item) => sum + item.avg, 0) /
+        dataForChart.length
     ) || 0;
+
+  // --- Gestion dynamique des dates ---
+  const weekStart = new Date(); // date de référence (lundi de la semaine)
+  function getDateFromDay(day: string) {
+    const dayIndex = daysOrder.indexOf(day);
+    const date = new Date(weekStart);
+    date.setDate(date.getDate() + dayIndex);
+    return date;
+  }
+  function formatDate(date: Date) {
+    return date.toLocaleDateString("fr-FR", { day: "2-digit", month: "short" });
+  }
+
+  const startDate = visibleDays.length
+    ? formatDate(getDateFromDay(visibleDays[0]))
+    : "";
+  const endDate = visibleDays.length
+    ? formatDate(getDateFromDay(visibleDays[visibleDays.length - 1]))
+    : "";
 
   return (
     <div
@@ -38,35 +67,71 @@ export default function HeartRateChart({ data }: HeartRateChartProps) {
         marginLeft: "-45px",
       }}
     >
-      {/* Affichage du BPM moyen en gros */}
-      <div style={{ textAlign: "center", marginBottom: 10 }}>
-        <div
-          style={{
-            fontSize: "1rem",
-            color: "#ff2e2e",
-            fontWeight: "bold",
-            textAlign: "left",
-            marginLeft: "10px",
-          }}
-        >
-          {weeklyAvg} BPM
+      {/* Conteneur titre + navigation */}
+      <div className="flex items-center justify-between mb-2">
+        {/* Titre BPM */}
+        <div>
+          <div
+            style={{
+              fontSize: "1rem",
+              color: "#ff2e2e",
+              fontWeight: "bold",
+            }}
+          >
+            {weeklyAvg} BPM
+          </div>
+          <div
+            style={{
+              color: "#707070",
+              fontSize: "12px",
+              marginTop: "0px",
+              marginBottom: "10px",
+            }}
+          >
+            Fréquence cardiaque moyenne
+          </div>
         </div>
-        <div
-          style={{
-            color: "#707070",
-            fontSize: "12px",
-            textAlign: "left",
-            marginTop: "5px",
-            marginLeft: "10px",
-          }}
-        >
-          Fréquence cardiaque moyenne
+
+        {/* Navigation chevrons et plage de dates */}
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={() => setCurrentIndex((i) => Math.max(i - 1, 0))}
+            disabled={currentIndex === 0}
+            className={`
+        w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all
+        border-gray-300 text-gray-600
+        hover:bg-[#0B23F4] hover:text-white hover:border-[#0B23F4]
+        disabled:opacity-30 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300
+      `}
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+
+          <span className="text-sm text-gray-600 px-3 whitespace-nowrap">
+            {startDate} - {endDate}
+          </span>
+
+          <button
+            onClick={() =>
+              setCurrentIndex((i) => (i + 4 < sortedDays.length ? i + 1 : i))
+            }
+            disabled={currentIndex + 4 >= sortedDays.length}
+            className={`
+        w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all
+        border-gray-300 text-gray-600
+        hover:bg-[#0B23F4] hover:text-white hover:border-[#0B23F4]
+        disabled:opacity-30 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300
+      `}
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
         </div>
       </div>
 
+      {/* Graphique */}
       <ResponsiveContainer width="100%" height={300}>
         <ComposedChart
-          data={orderedData}
+          data={dataForChart}
           margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
         >
           <XAxis
@@ -80,10 +145,7 @@ export default function HeartRateChart({ data }: HeartRateChartProps) {
             tick={{ fontSize: 12 }}
             width={40}
           />
-          <Tooltip
-            contentStyle={{ fontSize: "0.8rem", padding: "5px 10px" }}
-            itemStyle={{ padding: "2px 0" }}
-          />
+          <Tooltip contentStyle={{ fontSize: "0.8rem", padding: "5px 10px" }} />
           <Bar dataKey="min" fill="#ffc2c2" barSize={20} />
           <Bar dataKey="max" fill="#ff2e2e" barSize={20} />
           <Line

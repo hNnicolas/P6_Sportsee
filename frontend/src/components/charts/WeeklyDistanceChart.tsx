@@ -6,7 +6,9 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
+  Cell,
 } from "recharts";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface WeeklyDistanceChartProps {
   data?: { week: string; km: number }[];
@@ -23,6 +25,19 @@ export default function WeeklyDistanceChart({
   ],
 }: WeeklyDistanceChartProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  // Fonction pour calculer les dates de début et fin de semaine (6 derniers jours)
+  function getWeekDates(lastDay: Date) {
+    const end = new Date(lastDay);
+    const start = new Date(lastDay);
+    start.setDate(end.getDate() - 6); // prend les 6 derniers jours
+    const formatDate = (d: Date) =>
+      `${String(d.getDate()).padStart(2, "0")}.${String(
+        d.getMonth() + 1
+      ).padStart(2, "0")}`;
+    return { startDate: formatDate(start), endDate: formatDate(end) };
+  }
 
   const sortedWeeks = data
     .map((d) => d.week)
@@ -37,14 +52,46 @@ export default function WeeklyDistanceChart({
     weeksOrder.push(`S${weekNum + 1}`);
   }
 
+  // Création des données pour le graphique
   const dataForChart = weeksOrder.map((week) => {
     const found = data.find((d) => d.week === week);
-    return { week, km: found ? found.km : 0 };
+    const km = found ? found.km : 0;
+    const avgLast6Days = km / 6;
+
+    // Calcul dynamique de la date de fin de semaine
+    const lastDay = found
+      ? new Date(2025, 5, 1 + parseInt(found.week.slice(1)) * 7) // S1 -> 01/06/2025 + 7*j
+      : new Date();
+    const { startDate, endDate } = getWeekDates(lastDay);
+
+    return { week, km, avgLast6Days, startDate, endDate };
   });
 
   const totalDistance = dataForChart.reduce((sum, entry) => sum + entry.km, 0);
+  const chartHeight = 300;
 
-  const chartHeight = 220; // tu peux adapter selon l'écran si tu veux
+  // Tooltip personnalisé
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      const { startDate, endDate, km } = payload[0].payload;
+      return (
+        <div
+          style={{
+            backgroundColor: "#000",
+            color: "#fff",
+            padding: "8px 12px",
+            borderRadius: "6px",
+            fontSize: "14px",
+            textAlign: "center",
+          }}
+        >
+          <div>{`${startDate} au ${endDate}`}</div>
+          <div>{`${km} km`}</div>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <div
@@ -57,23 +104,55 @@ export default function WeeklyDistanceChart({
         marginLeft: "-30px",
       }}
     >
-      {" "}
-      <h4
-        className="text-left text-[1rem] font-bold text-[#0B23F4]"
-        style={{ marginLeft: "30px" }}
-      >
-        {totalDistance.toFixed(0)} km en moyenne
-      </h4>
-      <p
-        className="text-left text-[0.75rem] text-[#707070] mb-2"
-        style={{ marginTop: "-10px", marginLeft: "30px" }}
-      >
+      <div className="flex items-center justify-between px-[30px]">
+        <h4 className="text-[18px] font-bold text-[#0B23F4] mt-0px]">
+          {totalDistance.toFixed(0)} km en moyenne
+        </h4>
+
+        <div className="flex items-center space-x-2 mt-[10px] mr-[-20px]">
+          <button
+            onClick={() => setCurrentIndex((i) => Math.max(i - 1, 0))}
+            disabled={currentIndex === 0}
+            className={`
+              w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all
+              border-gray-300 text-gray-600
+              hover:bg-[#0B23F4] hover:text-white hover:border-[#0B23F4]
+              disabled:opacity-30 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300
+            `}
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+
+          <span className="text-sm text-gray-600 px-3 whitespace-nowrap">
+            28 mai - 25 juin
+          </span>
+          <button
+            onClick={() =>
+              setCurrentIndex((i) => (i + 4 < sortedWeeks.length ? i + 1 : i))
+            }
+            disabled={currentIndex + 4 >= sortedWeeks.length}
+            className={`
+              w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all
+              border-gray-300 text-gray-600
+              hover:bg-[#0B23F4] hover:text-white hover:border-[#0B23F4]
+              disabled:opacity-30 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300
+            `}
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
+      <p className="text-left text-[0.75rem] text-[#707070] mb-2 px-[30px] -mt-[20px]">
         Total des kilomètres 4 dernières semaines
       </p>
+
       <ResponsiveContainer width="100%" height={chartHeight}>
         <BarChart
           data={dataForChart}
           margin={{ top: 10, right: 10, left: 0, bottom: 10 }}
+          barCategoryGap="20%"
+          barGap={4}
         >
           <XAxis
             dataKey="week"
@@ -88,58 +167,26 @@ export default function WeeklyDistanceChart({
             axisLine={{ stroke: "#e0e0e0" }}
             tickLine={{ stroke: "#e0e0e0" }}
           />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: "#fff",
-              border: "1px solid #ddd",
-              borderRadius: 6,
-              fontSize: 14,
-            }}
-            formatter={(value, name) => [
-              `${value} km`,
-              name === "km" ? "Distance" : name,
-            ]}
-          />
+          <Tooltip content={<CustomTooltip />} />
           <Bar
             dataKey="km"
-            fill="#a2b3ff"
             radius={[5, 5, 0, 0]}
-            maxBarSize={60}
-          />
+            maxBarSize={15}
+            onMouseLeave={() => setActiveIndex(null)}
+          >
+            {dataForChart.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={activeIndex === index ? "#0B23F4" : "#a2b3ff"}
+                onMouseEnter={() => setActiveIndex(index)}
+              />
+            ))}
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
-      <div className="text-center mt-4 sm:mt-5 md:mt-6 space-x-2">
-        <button
-          onClick={() => setCurrentIndex((i) => Math.max(i - 1, 0))}
-          disabled={currentIndex === 0}
-          className={`px-3 py-1 border rounded cursor-pointer text-sm transition ${
-            currentIndex === 0
-              ? "opacity-50 cursor-not-allowed border-gray-200 bg-white"
-              : "hover:bg-gray-100 border-gray-300 bg-white active:translate-y-[1px]"
-          }`}
-        >
-          ← Précédent
-        </button>
-        <span className="mx-2 text-gray-600 text-sm">
-          {Math.floor(currentIndex / 4) + 1} /{" "}
-          {Math.ceil(sortedWeeks.length / 4)}
-        </span>
-        <button
-          onClick={() =>
-            setCurrentIndex((i) => (i + 4 < sortedWeeks.length ? i + 1 : i))
-          }
-          disabled={currentIndex + 4 >= sortedWeeks.length}
-          className={`px-3 py-1 border rounded cursor-pointer text-sm transition ${
-            currentIndex + 4 >= sortedWeeks.length
-              ? "opacity-50 cursor-not-allowed border-gray-200 bg-white"
-              : "hover:bg-gray-100 border-gray-300 bg-white active:translate-y-[1px]"
-          }`}
-        >
-          Suivant →
-        </button>
-      </div>
-      <div className="text-center mt-2 text-gray-600 text-sm">
-        <span className="text-[#2f38dc] text-lg">●</span> Km parcourus
+
+      <div className="text-left mt-2 text-gray-600 text-[12px]">
+        <span className="text-[#7A86FF] text-[12px] ml-[60px]">●</span> Km
       </div>
     </div>
   );

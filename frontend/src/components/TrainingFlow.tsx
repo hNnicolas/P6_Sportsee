@@ -192,7 +192,7 @@ export default function TrainingFlow({
               width: "150px",
               fontSize: "16px",
             }}
-            className="bg-[#0B23F4] text-white rounded hover:bg-blue-700 transition"
+            className="bg-[#0B23F4] text-white rounded hover:bg-blue-700 transition border-none outline-none"
           >
             Suivant
           </button>

@@ -113,7 +113,7 @@ export default function Chat() {
 
       <div className="flex-1 overflow-y-auto p-4">
         {messages.length === 0 && (
-          <div className="flex items-center mb-4">
+          <div className="flex items-center mb-4 h-[300px]">
             <div className="w-[38px] h-[38px] rounded-full bg-[#F4320C] flex items-center justify-center mr-2 mt-[320px]">
               <img
                 src="/assets/botIcon.svg"
@@ -175,17 +175,18 @@ export default function Chat() {
         )}
       </div>
 
-      <div className="p-4">
-        <div className="flex justify-center mt-10">
+      <div className="p-4 min-h-[300px]">
+        <div className="flex justify-center mt-[15px]">
           <div className="relative w-full max-w-[1000px]">
             <input
               type="text"
               placeholder="Comment puis-je vous aider ?"
-              className="w-full h-[140px] pl-6 pr-20 rounded-xl focus:outline-none bg-white text-[#707070] border border-[#E7E7E7]"
+              className="w-full h-[140px] pl-6 pr-20 rounded-[10px] focus:outline-none bg-white text-[#707070] border border-[#E7E7E7]"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
             />
+
             <button
               onClick={() => sendMessage()}
               className="absolute top-1/2 right-2 -translate-y-1/2 bg-[#0A24F5] hover:bg-blue-700 p-4 rounded-r-xl flex items-center justify-center"
@@ -203,8 +204,11 @@ export default function Chat() {
           ].map((suggestion, index) => (
             <button
               key={index}
-              style={{ height: "5rem" }}
-              className="!flex-1 !mx-1 !bg-[#F2F3FF] !text-[#C1C2C9] !px-4 !py-3 !rounded-full !text-sm !flex !items-center !justify-center border-0"
+              style={{
+                height: index === 0 ? "6rem" : "7rem",
+                borderRadius: "10px",
+              }}
+              className="w-[32%] bg-[#F2F3FF] text-[#C1C2C9] px-4 py-3 rounded-[20px]text-sm flex items-center justify-center border-0"
               onClick={() => {
                 setInput(suggestion);
                 sendMessage();
