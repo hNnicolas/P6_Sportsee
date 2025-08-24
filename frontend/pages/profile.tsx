@@ -1,13 +1,15 @@
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "@/src/contexts/AuthContext";
 import useUserInfo from "@/src/hooks/useUserInfo";
 import useUserActivity from "@/src/hooks/useUserActivity";
+import ChatModal from "@/src/components/ChatModal";
 
 export default function ProfilePage() {
   const { token, logout, user } = useAuth();
   const router = useRouter();
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const { data: userInfo, isLoading, error } = useUserInfo(token);
 
@@ -68,24 +70,32 @@ export default function ProfilePage() {
           <nav className="flex items-center gap-1 xl:gap-4 text-sm xl:text-base mt-[20px] w-[400px] xl:w-auto mr-[100px] xl:mr-8 h-16 px-4 whitespace-nowrap overflow-hidden">
             <Link
               href="/dashboard"
-              className="text-[#111111] hover:text-[#0B23F4]"
+              style={{
+                color: "black",
+              }}
+              className="no-underline transition-colors"
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#0B23F4")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "black")}
             >
               Dashboard
             </Link>
-            <Link href="/chat" className="text-[#111111] hover:text-[#0B23F4]">
-              Coach AI
-            </Link>
+            <button
+              className="bg-[#111111] px-[15px] py-[15px] rounded-lg text-black hover:text-[#0B23F4] transition-colors"
+              onClick={() => setIsChatOpen(true)}
+            >
+              Coach IA
+            </button>
             <Link
               href="/profile"
-              className="text-[#111111] hover:text-[#0B23F4]"
+              style={{ color: "black" }}
+              className="no-underline transition-colors"
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#0B23F4")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "black")}
             >
               Mon profil
             </Link>
             <span className="text-[#0B23F4] text-xs font-thin">|</span>
-            <button
-              onClick={logout}
-              className="text-[#111111] hover:text-[#0B23F4] py-1 px-2"
-            >
+            <button onClick={logout} className="text-[#0B23F4] !important">
               Se déconnecter
             </button>
           </nav>
@@ -231,6 +241,7 @@ export default function ProfilePage() {
           </div>
         </div>
       </footer>
+      <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </div>
   );
 }
