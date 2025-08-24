@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/src/contexts/AuthContext";
 import useUserInfo from "@/src/hooks/useUserInfo";
 import DashboardCharts from "@/src/components/DashboardCharts";
 import TrainingFlow from "@/src/components/TrainingFlow";
+import ChatModal from "@/src/components/ChatModal";
 
 export default function DashboardPage() {
   const { token, logout } = useAuth();
   const { data: userInfo, isLoading, error } = useUserInfo(token);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   if (isLoading) return <p>Chargement...</p>;
   if (error) return <p>Erreur lors du chargement des données : {error}</p>;
@@ -34,11 +36,41 @@ export default function DashboardPage() {
 
             <div>
               <nav className="flex items-center gap-1 text-sm mt-[20px] w-full max-w-[500px]mr-[100px] h-16 px-4 whitespace-nowrap overflow-hidden">
-                <Link href="/dashboard">Dashboard</Link>
-                <Link href="/chat">Coach AI</Link>
-                <Link href="/profile">Mon profil</Link>
+                <Link
+                  href="/dashboard"
+                  style={{
+                    color: "black",
+                  }}
+                  className="no-underline transition-colors"
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = "#0B23F4")
+                  }
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "black")}
+                >
+                  Dashboard
+                </Link>
+
+                <button
+                  className="bg-[#111111] px-[15px] py-[15px] rounded-lg text-black hover:text-[#0B23F4] transition-colors"
+                  onClick={() => setIsChatOpen(true)}
+                >
+                  Coach IA
+                </button>
+                <Link
+                  href="/profile"
+                  style={{ color: "black" }}
+                  className="no-underline transition-colors"
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = "#0B23F4")
+                  }
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "black")}
+                >
+                  Mon profil
+                </Link>
                 <span className="text-[#0B23F4] text-xs font-thin">|</span>
-                <button onClick={logout}>Se déconnecter</button>
+                <button onClick={logout} className="text-[#0B23F4] !important">
+                  Se déconnecter
+                </button>
               </nav>
             </div>
           </header>
@@ -194,6 +226,8 @@ export default function DashboardPage() {
           </div>
         </div>
       </footer>
+      {/* Affichage conditionnel de la modale */}
+      <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </div>
   );
 }

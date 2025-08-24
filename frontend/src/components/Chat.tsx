@@ -13,7 +13,11 @@ interface Message {
   sender: "user" | "bot";
 }
 
-export default function Chat() {
+interface ChatProps {
+  onClose?: () => void; // prop pour fermer la modale
+}
+
+export default function Chat({ onClose }: ChatProps) {
   const { token } = useAuth();
   const { data, isLoading, error } = useUserInfo(token);
   const router = useRouter();
@@ -95,22 +99,19 @@ export default function Chat() {
   const userAvatar = data?.profile.profilePicture;
 
   return (
-    <div className="flex flex-col min-h-screen bg-white max-w-[1000px] w-full mx-auto">
-      <div className="ml-auto flex items-center gap-1 mt-[20px] mr-[10px]">
+    <div className="flex flex-col min-h-[80vh] bg-white max-w-[1000px] w-full mx-auto rounded-2xl shadow-lg p-4">
+      {/* Header modale */}
+      <div className="ml-auto flex items-center gap-2">
         <span
           className="text-xs cursor-pointer"
           style={{ color: "#707070" }}
-          onClick={() => {
-            console.log("➡️ Bouton Fermer cliqué, redirection vers /chat");
-            router.push("/chat");
-          }}
+          onClick={() => onClose && onClose()} // ferme la modale
         >
           Fermer
         </span>
-
         <button
-          onClick={() => setIsOpen(false)}
-          className="p-1 bg-transparent hover:bg-gray-200 rounded-md focus:outline-none border-none"
+          className="p-1 bg-transparent hover:bg-gray-200 rounded-md focus:outline-none"
+          onClick={() => onClose && onClose()}
         >
           <X size={14} color="#717171" />
         </button>

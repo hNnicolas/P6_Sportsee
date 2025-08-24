@@ -11,7 +11,7 @@ export interface UserProfile {
 }
 
 export interface UserStatistics {
-  totalDistance: string; // string car toFixed(1)
+  totalDistance: string;
   totalSessions: number;
   totalDuration: number;
 }
@@ -54,12 +54,16 @@ export async function fetchUserInfo(token: string): Promise<UserInfoResponse> {
   });
   if (!res.ok) {
     const errorData = await res.json();
-    throw new Error(errorData.message || "Erreur lors de la récupération des infos");
+    throw new Error(
+      errorData.message || "Erreur lors de la récupération des infos"
+    );
   }
   return res.json();
 }
 
-export async function fetchUserActivity(token: string): Promise<RunningEntry[]> {
+export async function fetchUserActivity(
+  token: string
+): Promise<RunningEntry[]> {
   const res = await fetch(`${API_BASE_URL}/api/user-activity`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -68,7 +72,9 @@ export async function fetchUserActivity(token: string): Promise<RunningEntry[]> 
 
   if (!res.ok) {
     const errorData = await res.json();
-    throw new Error(errorData.message || "Erreur lors de la récupération de l'activité");
+    throw new Error(
+      errorData.message || "Erreur lors de la récupération de l'activité"
+    );
   }
 
   const data = await res.json();
