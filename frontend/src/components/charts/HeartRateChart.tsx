@@ -167,7 +167,7 @@ export default function HeartRateChart({ data }: HeartRateChartProps) {
           gap: "1rem",
           fontSize: "0.9rem",
           marginTop: 10,
-          marginLeft: "35px",
+          marginLeft: "30px",
           color: "#666",
         }}
       >

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+// Informations personnelles de l'utilisateur
 interface Profile {
   firstName: string;
   lastName: string;
@@ -12,14 +13,16 @@ interface Profile {
   level?: "débutant" | "intermédiaire" | "expert";
 }
 
+// Statistiques sportives de l'utilisateur
 interface Statistics {
-  totalDistance: number; 
-  totalDuration: number; 
+  totalDistance: number;
+  totalDuration: number;
   totalSessions: number;
-  caloriesBurned: number; 
-  restDays: number;      
+  caloriesBurned: number;
+  restDays: number;
 }
 
+// Structure de la réponse complète de l'API
 interface UserInfo {
   profile: Profile;
   statistics: Statistics;
@@ -39,6 +42,7 @@ export default function useUserInfo(token: string | null) {
       return;
     }
 
+    // Fonction interne pour récupérer les infos utilisateur
     async function fetchUserInfo() {
       setIsLoading(true);
       setError(null);
@@ -52,9 +56,12 @@ export default function useUserInfo(token: string | null) {
 
         if (!response.ok) {
           const errorData = await response.json().catch(() => null);
-          throw new Error(errorData?.message || "Erreur lors de la récupération des données");
+          throw new Error(
+            errorData?.message || "Erreur lors de la récupération des données"
+          );
         }
 
+        // Parsing JSON et mise à jour du state
         const json = await response.json();
         setData(json);
       } catch (err: any) {
@@ -65,8 +72,10 @@ export default function useUserInfo(token: string | null) {
       }
     }
 
+    // Exécution de la fonction
     fetchUserInfo();
   }, [token]);
 
+  // Le hook retourne les données + états utiles
   return { data, isLoading, error };
 }

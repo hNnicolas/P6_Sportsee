@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 
+// --- Interfaces pour typer les données ---
 interface RunningSession {
   date: string;
   distance: number;
@@ -13,16 +14,17 @@ interface RunningSession {
 }
 
 interface WeeklyDistance {
-  week: string;
-  distance: number;
+  week: string; // Identifiant de semaine au format ISO
+  distance: number; // Distance totale parcourue sur cette semaine
 }
 
 interface WeeklyRemaining {
   week: string;
-  remainingDistance: number;
-  remainingSessions: number;
+  remainingDistance: number; // Distance restante à faire pour atteindre l’objectif
+  remainingSessions: number; // Séances restantes pour atteindre l’objectif
 }
 
+// Format de retour du hook
 interface UserActivityHook {
   sessions: RunningSession[];
   totalDistance: number;
@@ -35,7 +37,7 @@ interface UserActivityHook {
 
 const API_BASE_URL = "http://localhost:8000";
 
-// Helper : obtenir semaine ISO (ex : 2025-W32)
+// --- Helper : calcul de la semaine ISO ---
 function getWeekISO(dateString: string): string {
   const date = new Date(dateString);
   const dayNum = (date.getUTCDay() + 6) % 7; // lundi = 0
@@ -50,13 +52,14 @@ export default function useUserActivity(
   token: string | null,
   startWeek: string,
   endWeek: string,
-  weeklyDistanceGoal: number = 20,
-  weeklySessionsGoal: number = 3
+  weeklyDistanceGoal: number = 40,
+  weeklySessionsGoal: number = 8
 ): UserActivityHook {
   const [sessions, setSessions] = useState<RunningSession[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // --- Chargement des données depuis l’API ---
   useEffect(() => {
     if (!token || !startWeek || !endWeek) return;
 
@@ -67,6 +70,7 @@ export default function useUserActivity(
       setError(null);
 
       try {
+        // Appel API avec token et plage de semaines
         const res = await fetch(
           `${API_BASE_URL}/api/user-activity?startWeek=${startWeek}&endWeek=${endWeek}`,
           {
@@ -80,6 +84,7 @@ export default function useUserActivity(
           throw new Error(errData?.message || "Erreur lors de la récupération");
         }
 
+        // Récupération et stockage des données
         const data: RunningSession[] = await res.json();
         setSessions(Array.isArray(data) ? data : []);
       } catch (err: any) {
@@ -96,24 +101,30 @@ export default function useUserActivity(
     return () => controller.abort();
   }, [token, startWeek, endWeek]);
 
-  // --- Mémo pour calculs dérivés ---
+  // --- Distances par semaine (calcul dérivé avec useMemo) ---
   const weeklyDistances = useMemo(() => {
     const distByWeek: Record<string, number> = {};
+
+    // Regroupe les distances par semaine ISO
     sessions.forEach((s) => {
       const week = getWeekISO(s.date);
       distByWeek[week] = (distByWeek[week] || 0) + s.distance;
     });
+
+    // Convertit en tableau et trie chronologiquement
     return Object.entries(distByWeek)
       .map(([week, distance]) => ({ week, distance }))
       .sort((a, b) => a.week.localeCompare(b.week));
   }, [sessions]);
 
+  // --- Distance totale sur toutes les sessions ---
   const totalDistance = useMemo(() => {
     return sessions
       .filter((s): s is RunningSession => typeof s.distance === "number")
       .reduce((sum, s) => sum + s.distance, 0);
   }, [sessions]);
 
+  // --- Distance moyenne par semaine ---
   const averageDistance = useMemo(() => {
     if (!weeklyDistances.length) return 0;
     return (
@@ -122,17 +133,23 @@ export default function useUserActivity(
     );
   }, [weeklyDistances]);
 
+  // --- Objectifs restants (distance et séances par semaine) ---
   const weeklyRemaining = useMemo(() => {
     const countsByWeek: Record<string, number> = {};
+
+    // Compte le nombre de séances par semaine
     sessions.forEach((s) => {
       const week = getWeekISO(s.date);
       countsByWeek[week] = (countsByWeek[week] || 0) + 1;
     });
 
+    // Regroupe toutes les semaines rencontrées (sessions + distances)
     const allWeeksSet = new Set([
       ...weeklyDistances.map((w) => w.week),
       ...Object.keys(countsByWeek),
     ]);
+
+    // Pour chaque semaine, calcule ce qu’il reste à faire
     return Array.from(allWeeksSet)
       .sort()
       .map((week) => {
@@ -147,6 +164,7 @@ export default function useUserActivity(
       });
   }, [sessions, weeklyDistances, weeklyDistanceGoal, weeklySessionsGoal]);
 
+  // --- Données exposées par le hook ---
   return {
     sessions,
     totalDistance,

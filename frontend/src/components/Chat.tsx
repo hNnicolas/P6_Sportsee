@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import useUserInfo from "../hooks/useUserInfo";
 import TypingDots from "./TypingDots";
 import useUserPrompt, { UserProfile } from "../hooks/useUserPrompt";
+import { useRouter } from "next/router";
 
 import { X } from "lucide-react";
 
@@ -15,6 +16,7 @@ interface Message {
 export default function Chat() {
   const { token } = useAuth();
   const { data, isLoading, error } = useUserInfo(token);
+  const router = useRouter();
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -95,9 +97,17 @@ export default function Chat() {
   return (
     <div className="flex flex-col min-h-screen bg-white max-w-[1000px] w-full mx-auto">
       <div className="ml-auto flex items-center gap-1 mt-[20px] mr-[10px]">
-        <span className="text-xs" style={{ color: "#707070" }}>
+        <span
+          className="text-xs cursor-pointer"
+          style={{ color: "#707070" }}
+          onClick={() => {
+            console.log("➡️ Bouton Fermer cliqué, redirection vers /chat");
+            router.push("/chat");
+          }}
+        >
           Fermer
         </span>
+
         <button
           onClick={() => setIsOpen(false)}
           className="p-1 bg-transparent hover:bg-gray-200 rounded-md focus:outline-none border-none"
