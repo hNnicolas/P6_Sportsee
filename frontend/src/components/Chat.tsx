@@ -110,7 +110,7 @@ export default function Chat({ onClose }: ChatProps) {
           Fermer
         </span>
         <button
-          className="p-1 bg-transparent hover:bg-gray-200 rounded-md focus:outline-none"
+          className="p-1 bg-transparent hover:bg-gray-200 rounded-md focus:outline-none border-none"
           onClick={() => onClose && onClose()}
         >
           <X size={14} color="#717171" />

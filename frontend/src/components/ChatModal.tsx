@@ -35,13 +35,14 @@ export default function ChatModal({ isOpen, onClose }: ChatModalProps) {
           className={`bg-[#FFFFFF] shadow-xl overflow-y-auto transform transition-transform duration-300 ease-out pointer-events-auto
             ${isOpen ? "translate-y-0" : "translate-y-full"}`}
           style={{
-            width: "96vw",
+            width: "89vw",
             height: "98vh",
             maxWidth: "1700px",
             maxHeight: "104vh",
-            margin: "60px 10px 0px 20px",
+            margin: "60px 0px 0px 20px",
             borderTopLeftRadius: "20px",
             borderTopRightRadius: "20px",
+            marginLeft: "70px",
           }}
         >
           <Chat onClose={onClose} />
