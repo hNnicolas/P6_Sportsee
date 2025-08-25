@@ -1,4 +1,4 @@
-# ![SportSee Logo](frontend/public/images/logo.png) <br> Projet Dashboard Utilisateur avec React et Feature IA with Mistral API 
+# ![SportSee Logo](frontend/public/images/icons/logo.png) <br> Projet Dashboard Utilisateur avec React et Feature IA with Mistral API 
 
 ## 📖 Description
 
