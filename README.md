@@ -58,6 +58,10 @@ Voici les utilisateurs disponibles pour tester l’authentification :
 ![Dashboard 1](frontend/public/images/screenshot/screenshot_dashboard-1.png)
 ![Dashboard 2](frontend/public/images/screenshot/screenshot_dashboard-2.png)
 
+### Chatbot modale IA
+![Chatbot 1](frontend/public/images/screenshot/screenshot_chat_modal.png)
+![Chatbot 2](frontend/public/images/screenshot/screenshot_chatbot_modal.png)
+
 ### Plan d’entraînement généré
 ![Plan d'entraînement](frontend/public/images/screenshot/screenshot_plan_entrainement.png)
 
