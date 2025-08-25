@@ -59,7 +59,7 @@ export default function ProfilePage() {
           <div className="relative inline-block">
             <img
               alt="Logo"
-              src="/images/logo.png"
+              src="/images/icons/logo.png"
               className="h-8 w-8 xl:h-10 xl:w-10 absolute bottom-4 animate-wave"
               style={{ left: "50px" }}
             />
@@ -234,7 +234,7 @@ export default function ProfilePage() {
               Contact
             </Link>
             <img
-              src="/images/logo-footer.png"
+              src="/images/icons/footer-logo.png"
               alt="Logo"
               className="h-10 w-10 sm:h-12 sm:w-12 animate-wave border-none outline-none"
             />

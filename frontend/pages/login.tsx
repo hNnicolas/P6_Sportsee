@@ -20,7 +20,7 @@ export default function LoginPage() {
       <div className="flex-1 bg-[var(--color-background-light)] flex flex-col px-8 py-6">
         <div className="flex items-center gap-3 mb-8 self-start">
           <img
-            src="/images/logo.png"
+            src="/images/icons/logo.png"
             alt="Logo"
             className="h-10 w-10 animate-wave absolute"
             style={{ marginLeft: "90px", marginTop: "90px" }}
@@ -106,13 +106,12 @@ export default function LoginPage() {
         </div>
       </div>
 
-      <div className="flex-1 relative">
+      <div className="flex-1 relative w-full h-full">
         <Image
-          src="/images/login.background.png"
+          src="/images/icons/login-background.png"
           alt="Image de fond"
-          width={1024}
-          height={768}
-          style={{ width: "120%", height: "100%", objectFit: "cover" }}
+          fill
+          style={{ objectFit: "cover", objectPosition: "top 2%" }}
           priority
         />
       </div>

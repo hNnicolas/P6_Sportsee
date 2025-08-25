@@ -1,7 +1,5 @@
 import { useState } from "react";
 import StartTraining from "./StartTraining";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBullseye, faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import useUserPrompt, { UserProfile } from "../hooks/useUserPrompt";
 import axios from "axios";
 
@@ -147,10 +145,11 @@ export default function TrainingFlow({
       {/* Step 2 */}
       {step === 2 && (
         <div className="flex flex-col items-center gap-4 bg-white rounded-xl p-8 shadow-md w-[1000px] h-[450px]">
-          <FontAwesomeIcon
-            icon={faBullseye}
-            className="text-[#0B23F4] mt-[50px]"
-            style={{ fontSize: "80px" }}
+          <img
+            src="/images/icons/target.png"
+            alt="Calendar"
+            className="text-[#0B23F4] mt-[50px] mb-[20px]"
+            style={{ width: "80px", height: "80px" }}
           />
 
           <h2 className="font-semibold" style={{ fontSize: "30px" }}>
@@ -202,12 +201,13 @@ export default function TrainingFlow({
       {/* Étape 3 */}
       {step === 3 && (
         <div className="flex flex-col items-center gap-4 bg-white rounded-xl p-8 shadow-md w-[1000px] h-[550px]">
-          <FontAwesomeIcon
-            icon={faCalendarDays}
-            size="3x"
-            className="text-[#0B23F4] mt-[50px]"
-            style={{ fontSize: "80px", marginBottom: "20px" }}
+          <img
+            src="/images/icons/calendar.png"
+            alt="Calendar"
+            className="text-[#0B23F4] mt-[50px] mb-[20px]"
+            style={{ width: "80px", height: "80px" }}
           />
+
           <h2
             className="font-semibold"
             style={{ fontSize: "30px", marginTop: "0px" }}
@@ -254,7 +254,11 @@ export default function TrainingFlow({
               style={{ backgroundColor: "#FFFFFF" }}
               className="w-[50px] h-[50px] mt-[10px] flex items-center justify-center border border-[#717171] rounded-[10px]"
             >
-              ←
+              <img
+                src="/images/icons/button-plan.png"
+                alt="Button Plan"
+                className="w-4 h-4"
+              />
             </button>
 
             <button
@@ -323,12 +327,18 @@ export default function TrainingFlow({
                       width: "30px",
                       height: "30px",
                       backgroundColor: "#F2F3FF",
-                      color: "#4657F7",
-                      fontSize: "1.3rem",
                       marginRight: "40px",
                     }}
                   >
-                    {openWeeks[wIndex] ? "−" : "+"}
+                    <img
+                      src={
+                        openWeeks[wIndex]
+                          ? "/images/icons/open-plan.png"
+                          : "/images/icons/close-plan.png"
+                      }
+                      alt={openWeeks[wIndex] ? "Open" : "Close"}
+                      className="w-4 h-4"
+                    />
                   </span>
                 </div>
 

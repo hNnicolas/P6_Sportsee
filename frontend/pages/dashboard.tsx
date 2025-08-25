@@ -27,7 +27,7 @@ export default function DashboardPage() {
             <div className="flex items-center">
               <div className="relative inline-block">
                 <img
-                  src="/images/logo.png"
+                  src="/images/icons/logo.png"
                   alt="Logo"
                   className="h-10 w-10 sm:h-12 sm:w-12 animate-wave absolute bottom-4 right-4"
                 />
@@ -89,9 +89,9 @@ export default function DashboardPage() {
           >
             <div className="flex items-center gap-4 min-w-0">
               <img
-                src="/assets/boticon.svg"
-                alt="Chatbot Logo"
-                className="h-10 w-10 sm:h-12 sm:w-12 flex-shrink-0"
+                src="/images/icons/icone-AI.png"
+                alt="icon-ai"
+                className="h-10 w-10 sm:h-12 sm:w-12 flex-shrink-0 mr-[10px]"
                 style={{
                   filter:
                     "invert(20%) sepia(97%) saturate(6000%) hue-rotate(205deg) brightness(95%) contrast(100%)",
@@ -105,8 +105,9 @@ export default function DashboardPage() {
 
             <Link
               href="/chat"
-              className="bg-[#0B23F4] text-white px-[15px] py-[15px] rounded-lg hover:bg-blue-700 transition 
-              text-center no-underline inline-block whitespace-nowrap flex-shrink-0 ml-4"
+              style={{ width: "200px", padding: "20px" }}
+              className="bg-[#0B23F4] text-white rounded-lg hover:bg-blue-700 transition 
+                         text-center no-underline inline-block whitespace-nowrap flex-shrink-0 ml-4"
             >
               Lancer une conversation
             </Link>
@@ -142,16 +143,21 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 mr-[25px]">
                 <p className="text-[#707070] font-medium whitespace-nowrap">
                   Distance totale parcourue :
                 </p>
                 <div className="p-3 rounded-md bg-[#0B23F4] text-white">
-                  <span className="bg-white text-[#FFFFFF] px-4 py-2 rounded font-semibold min-w-[60px] text-center inline-flex items-center gap-2 text-lg">
+                  <span className="bg-white text-[#FFFFFF] px-4 py-2 rounded font-semibold min-w-[60px] text-center inline-flex items-center gap-2 text-lg mr-[15px]">
                     <img
-                      src="/images/logo-chat.png"
+                      src="/images/icons/outline.png"
                       alt="logo"
                       className="h-[1.8em] w-auto object-contain align-middle"
+                      style={{
+                        fontSize: "18px",
+                        width: "30px",
+                        padding: "15px",
+                      }}
                     />
                     {typeof statistics.totalDistance === "number"
                       ? statistics.totalDistance.toFixed(1)
@@ -219,7 +225,7 @@ export default function DashboardPage() {
               Contact
             </Link>
             <img
-              src="/images/logo-footer.png"
+              src="/images/icons/footer-logo.png"
               alt="Logo"
               className="h-10 w-10 sm:h-12 sm:w-12 animate-wave border-none outline-none"
             />

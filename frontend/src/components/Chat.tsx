@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import useUserInfo from "../hooks/useUserInfo";
-import TypingDots from "./TypingDots";
 import useUserPrompt, { UserProfile } from "../hooks/useUserPrompt";
 import { useRouter } from "next/router";
 
@@ -113,7 +112,11 @@ export default function Chat({ onClose }: ChatProps) {
           className="p-1 bg-transparent hover:bg-gray-200 rounded-md focus:outline-none border-none"
           onClick={() => onClose && onClose()}
         >
-          <X size={14} color="#717171" />
+          <img
+            src="/images/icons/close-modale.png"
+            alt="close-modale"
+            className="w-9 h-9 mr-2 rounded-full object-cover flex-shrink-0 self-end mt-[6px]"
+          />
         </button>
       </div>
 
@@ -123,19 +126,6 @@ export default function Chat({ onClose }: ChatProps) {
       </h1>
 
       <div className="flex-1 overflow-y-auto p-4">
-        {messages.length === 0 && (
-          <div className="flex items-center mb-4 h-[300px]">
-            <div className="w-[38px] h-[38px] rounded-full bg-[#F4320C] flex items-center justify-center mr-2 mt-[320px]">
-              <img
-                src="/assets/botIcon.svg"
-                alt="Bot"
-                className="w-9 h-9 rounded-full object-cover"
-              />
-            </div>
-            <TypingDots />
-          </div>
-        )}
-
         {messages.map((msg) => (
           <div
             key={msg.id}
@@ -143,45 +133,66 @@ export default function Chat({ onClose }: ChatProps) {
               msg.sender === "user" ? "justify-end" : "justify-start"
             }`}
           >
-            {msg.sender === "bot" && (
-              <img
-                src="/assets/botIcon.svg"
-                alt="Bot"
-                className="w-9 h-9 mr-2 rounded-full object-cover"
-              />
-            )}
-            <div
-              className={`px-4 py-2 rounded-2xl max-w-xs break-words text-sm ${
-                msg.sender === "user"
-                  ? "bg-[#FFECEC] text-black rounded-br-none"
-                  : "bg-gray-100 text-black rounded-bl-none"
-              }`}
-            >
-              {msg.text}
-            </div>
-            {msg.sender === "user" && userAvatar && (
-              <img
-                src={userAvatar}
-                alt="user avatar"
-                className="w-9 h-9 ml-2 rounded-full object-cover border border-gray-300 max-w-[36px] max-h-[36px]"
-              />
+            {msg.sender === "bot" ? (
+              <div className="flex flex-col items-start mb-[50px]">
+                {/* Titre du bot */}
+                <div className="text-[#707070] text-sm ml-[40px] mb-[10px]">
+                  Coach AI
+                </div>
+                <div className="flex items-end">
+                  {/* Avatar du bot */}
+                  <img
+                    src="/images/icons/profile.png"
+                    alt="Bot"
+                    className="w-9 h-9 mr-[10px] rounded-full object-cover flex-shrink-0 self-end"
+                  />
+
+                  {/* Message du bot */}
+                  <div
+                    style={{ padding: "10px" }}
+                    className="max-w-[500px] break-words text-sm text-center bg-[#E7E7E7] text-black rounded-tl-[20px] rounded-tr-[20px] rounded-br-[20px]"
+                  >
+                    {msg.text}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col items-end mb-[20px] mr-[35px]">
+                {/* Message utilisateur */}
+                <div
+                  style={{ padding: "10px" }}
+                  className="max-w-[500px] ml-[20px] break-words text-sm text-center bg-[#FFECEC] text-black rounded-br-none rounded-[20px]"
+                >
+                  {msg.text}
+                </div>
+
+                {/* Avatar utilisateur */}
+                {userAvatar && (
+                  <img
+                    src={userAvatar}
+                    alt="user avatar"
+                    className="w-16 h-16 ml-[10px] rounded-full object-cover border border-gray-300 max-w-[36px] max-h-[36px]"
+                    style={{ marginTop: "-45px", marginRight: "-30px" }}
+                  />
+                )}
+              </div>
             )}
           </div>
         ))}
-        <img
-          src="/assets/dots.svg"
-          alt="loading"
-          className="w-17 h-6"
-          style={{ marginLeft: "35px" }}
-        />
+
+        {/* Affichage de l'animation de saisie du bot uniquement si il tape */}
         {botTyping && (
-          <div className="flex items-center mb-4">
+          <div className="flex items-center mb-[50px] mt-[20px]">
             <img
-              src="/assets/botIcon.svg"
-              alt="Bot"
-              className="w-9 h-9 mr-2 rounded-full object-cover"
+              src="/images/icons/profile.png"
+              alt="loading"
+              className="w-17 h-6 ml-4"
             />
-            <TypingDots />
+            <img
+              src="/images/icons/dots.png"
+              alt="dots"
+              className="w-9 h-9 rounded-full object-cover"
+            />
           </div>
         )}
       </div>
@@ -197,12 +208,26 @@ export default function Chat({ onClose }: ChatProps) {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
             />
-
+            <img
+              src="/images/icons/icone-AI.png"
+              alt="icon-AI"
+              className="absolute right-16 top-1/2 mt-[-60px] ml-[8px] w-6 h-6"
+            />
             <button
               onClick={() => sendMessage()}
-              className="absolute top-1/2 right-2 -translate-y-1/2 bg-[#0A24F5] hover:bg-blue-700 p-4 rounded-r-xl flex items-center justify-center"
+              className="absolute top-1/2 right-2 -translate-y-1/2 flex items-center justify-center border-0 rounded-[10px] bg-[#0A24F5] hover:bg-blue-700"
+              style={{
+                width: "45px",
+                height: "40px",
+                marginLeft: "950px",
+                marginTop: "25px",
+              }}
             >
-              <img src="/sendArrow.svg" alt="Envoyer" className="w-5 h-5" />
+              <img
+                src="/images/icons/button-chat.png"
+                alt="Envoyer"
+                className="w-full h-full object-contain"
+              />
             </button>
           </div>
         </div>

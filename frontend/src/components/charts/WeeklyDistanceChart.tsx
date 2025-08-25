@@ -8,7 +8,6 @@ import {
   ResponsiveContainer,
   Cell,
 } from "recharts";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface WeeklyDistanceChartProps {
   data?: { week: string; km: number }[];
@@ -120,7 +119,7 @@ export default function WeeklyDistanceChart({
               disabled:opacity-30 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300
             `}
           >
-            <ChevronLeft className="w-4 h-4" />
+            <img src="/images/icons/left.png" alt="Left" className="w-4 h-4" />{" "}
           </button>
 
           <span className="text-sm text-gray-600 px-3 whitespace-nowrap">
@@ -138,7 +137,7 @@ export default function WeeklyDistanceChart({
               disabled:opacity-30 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-300
             `}
           >
-            <ChevronRight className="w-4 h-4" />
+            <img src="/images/icons/right.png" alt="Left" className="w-4 h-4" />{" "}
           </button>
         </div>
       </div>
