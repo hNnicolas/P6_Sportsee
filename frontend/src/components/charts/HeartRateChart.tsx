@@ -21,7 +21,7 @@ export default function HeartRateChart({ data }: HeartRateChartProps) {
     .map((d) => d.day)
     .sort((a, b) => daysOrder.indexOf(a) - daysOrder.indexOf(b));
 
-  const visibleDays = sortedDays.slice(currentIndex, currentIndex + 4);
+  const visibleDays = sortedDays.slice(currentIndex, currentIndex + 7);
 
   const dataForChart = visibleDays.map((day) => {
     const found = data.find((d) => d.day === day);
@@ -35,7 +35,7 @@ export default function HeartRateChart({ data }: HeartRateChartProps) {
     ) || 0;
 
   // --- Gestion dynamique des dates ---
-  const weekStart = new Date(); // date de référence (lundi de la semaine)
+  const weekStart = new Date();
   function getDateFromDay(day: string) {
     const dayIndex = daysOrder.indexOf(day);
     const date = new Date(weekStart);
@@ -66,9 +66,7 @@ export default function HeartRateChart({ data }: HeartRateChartProps) {
         marginLeft: "-45px",
       }}
     >
-      {/* Conteneur titre + navigation */}
       <div className="flex items-center justify-between mb-2">
-        {/* Titre BPM */}
         <div>
           <div
             style={{
@@ -91,7 +89,6 @@ export default function HeartRateChart({ data }: HeartRateChartProps) {
           </div>
         </div>
 
-        {/* Navigation chevrons et plage de dates */}
         <div className="flex items-center space-x-2">
           <button
             onClick={() => setCurrentIndex((i) => Math.max(i - 1, 0))}
@@ -145,14 +142,46 @@ export default function HeartRateChart({ data }: HeartRateChartProps) {
             width={40}
           />
           <Tooltip contentStyle={{ fontSize: "0.8rem", padding: "5px 10px" }} />
-          <Bar dataKey="min" fill="#ffc2c2" barSize={20} />
-          <Bar dataKey="max" fill="#ff2e2e" barSize={20} />
+          <Bar
+            dataKey="min"
+            fill="#ffc2c2"
+            barSize={12}
+            radius={[10, 10, 0, 0]}
+          />
+          <Bar
+            dataKey="max"
+            fill="#ff2e2e"
+            barSize={12}
+            radius={[10, 10, 0, 0]}
+          />
+
           <Line
             type="monotone"
             dataKey="avg"
-            stroke="#2f38dc"
+            stroke="#fff"
             strokeWidth={2}
-            dot={{ r: 4 }}
+            activeDot={{
+              r: 6,
+              fill: "#0B23F4",
+              stroke: "#fff",
+              strokeWidth: 2,
+            }}
+            dot={(props) => {
+              const { cx, cy } = props;
+              if (cx == null || cy == null) {
+                return <circle cx={0} cy={0} r={0} />;
+              }
+              return (
+                <circle
+                  cx={cx}
+                  cy={cy}
+                  r={4}
+                  fill="#0B23F4"
+                  stroke="#fff"
+                  strokeWidth={2}
+                />
+              );
+            }}
           />
         </ComposedChart>
       </ResponsiveContainer>
